@@ -1,0 +1,22 @@
+@import './variables';
+
+.stats-radar .player-info {
+	margin: 0;
+	position: absolute;
+	top: $padding;
+	left: $padding;
+}
+
+.player-info .player-name,
+.player-info .player-position {
+	margin: 0;
+}
+
+.player-info .player-name {
+	color: var(--fg);
+	margin: 0;
+}
+
+.player-info .player-position {
+	color: var(--text-secondary);
+}

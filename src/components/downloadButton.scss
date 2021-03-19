@@ -1,0 +1,33 @@
+@import './variables';
+
+.download-radar {
+	position: absolute;
+	left: $padding;
+	bottom: $padding;
+
+	button {
+		-webkit-appearance: button;
+		background-color: var(--button-bg);
+		border: none;
+		border-radius: 50%;
+		width: 2rem;
+		height: 2rem;
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0.5rem var(--button-fg);
+		}
+	}
+
+	span/*,
+	.download-link*/ {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+}

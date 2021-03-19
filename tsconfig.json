@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "module": "es6",
+        "moduleResolution": "node",
+        "target": "es6",
+        "allowJs": true,
+        "jsx": "react",
+        "typeRoots": [
+            "./src/@types/",
+            "./node_modules/@types/"
+        ]
+    },
+    "include": [
+        "./src/**/*",
+        "src/custom.d.ts"
+    ]
+}
