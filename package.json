@@ -1,6 +1,6 @@
 {
   "name": "fbref-visualizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Visualize data from FBRef.com",
   "type": "module",
   "scripts": {
