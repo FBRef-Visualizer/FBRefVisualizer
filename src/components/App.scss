@@ -61,8 +61,16 @@ html.radar {
 	z-index: 10000;
 	color: var(--fg);
 	background-color: var(--bg);
-	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
-	justify-content: center;
+
+	.content {
+		width: calc(100vw - #{$padding * 2});
+		max-width: 75rem;
+		height: calc(100vh - #{$padding * 2});
+		margin: 0 auto;
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: center;
+		justify-content: center;
+	}
 }

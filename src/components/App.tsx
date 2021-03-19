@@ -34,11 +34,13 @@ const App: FC<Props> = (props: Props) => {
 
   return (
     <div className="stats-radar">
-      <PlayerInfoHeading info={info} />
-      <Chart stats={stats} splitIndexes={splitIndexes} />
-      <Attribution />
-      <DownloadButton />
-      <Downloader name={name} dataUrl={dataUrl} />
+      <div className="content">
+        <PlayerInfoHeading info={info} />
+        <Chart stats={stats} splitIndexes={splitIndexes} />
+        <Attribution />
+        <DownloadButton />
+        <Downloader name={name} dataUrl={dataUrl} />
+      </div>
     </div>
   );
 };
