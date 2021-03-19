@@ -4,9 +4,19 @@ Use a radar chart to visualize FBRef.com data.
 
 ## Installation
 
+This extension is not available in the Chrome web store and must be installed manually.
+Installation can be done in two ways:
+
+### Using Developer Mode
+
 1. Unzip `FBRefVisualizer.zip` into a directory.
 2. Open <chrome://extensions/> and enable developer mode.
-3. Click _Load unpacked_ and point chrome to the directory that you unzipped in step 1.
+3. Click _Load unpacked_ and point Chrome to the directory that you unzipped in step 1.
+
+### Using CRX File on Windows
+1. Run `whitelist.reg` or manually add the extension ID `mieebnfllicbcopenddppodkdojbmghj` to `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\ExtensionInstallWhitelist`.
+2. Navigate to <chrome://extensions/> and drag the .crx file onto the Chrome window to install.
+3. Completely restart Chrome by right clicking in the icon in the system tray and selecting _Exit_.
 
 ## Usage
 
