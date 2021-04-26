@@ -25,13 +25,22 @@ function download(sender: chrome.runtime.MessageSender): void {
     }
 }
 
-function enableIcon(sender: chrome.runtime.MessageSender): void {
+
+function setIcon(sender: chrome.runtime.MessageSender, enable: boolean): void {
     const tabId = sender.tab?.id;
+    setIconByTabId(tabId, enable);
+}
+
+function setIconByTabId(tabId: number | undefined, enable: boolean): void {
+    const suffix = enable ? '.png' : '-disabled.png';
+    const path = {
+        "16": `icon16${suffix}`,
+        "48": `icon48${suffix}`,
+        "128": `icon128${suffix}`
+    };
+    console.log('set icon', path, tabId);
     if (tabId) {
-        chrome.action.setIcon({
-            tabId,
-            path: 'icon16.png'
-        });
+        chrome.action.setIcon({ tabId, path });
     }
 }
 
@@ -39,7 +48,9 @@ function handleMessage(request: Message, sender: chrome.runtime.MessageSender): 
     if (request.command === Command.Download) {
         download(sender);
     } else if (request.command === Command.EnableIcon) {
-        enableIcon(sender);
+        setIcon(sender, true);
+    } else if (request.command === Command.DisableIcon) {
+        setIcon(sender, false);
     }
 }
 
@@ -52,6 +63,9 @@ function handleClick(tab: chrome.tabs.Tab): void {
 function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void {
     console.log('nav', changeInfo.status, changeInfo, tab);
     if (changeInfo?.status === 'complete' && testUrl(tab?.url)) {
+        //disable icon while we see if there is data
+        setIconByTabId(tabId, false);
+
         // inject our payload
         console.log('injecting');
         chrome.scripting.executeScript({

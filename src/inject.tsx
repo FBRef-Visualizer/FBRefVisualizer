@@ -35,6 +35,7 @@ function init(): void {
         });
     }
     else {
+        chrome.runtime.sendMessage({ command: Command.DisableIcon });
         console.warn('No data to scrape');
     }
 }
