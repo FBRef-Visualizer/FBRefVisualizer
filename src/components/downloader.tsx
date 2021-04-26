@@ -4,7 +4,6 @@ import { FC, useCallback } from 'react';
 interface Props {
     name: string;
     dataUrl: string | null;
-    // done: () => void;
 }
 
 const Downloader: FC<Props> = (props: Props) => {

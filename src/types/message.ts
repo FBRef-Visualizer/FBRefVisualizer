@@ -6,7 +6,8 @@ export enum Command {
     Launch,
     DisableIcon,
     EnableIcon,
-    AddToCompare
+    AddToCompare,
+    Close
 }
 
 interface MessageBase {
@@ -39,9 +40,14 @@ export interface AddToCompareMessage extends MessageBase {
     player: Player;
 }
 
+export interface CloseMessage extends MessageBase {
+    command: Command.Close;
+}
+
 export type Message = LaunchMessage |
     DownloadResponseMessage |
     DownloadMessage |
     EnableIconMessage |
     DisableIconMessage |
-    AddToCompareMessage;
+    AddToCompareMessage |
+    CloseMessage;

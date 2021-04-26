@@ -5,9 +5,8 @@ import PlayerInfo from '../types/playerInfo';
 import Stat from '../types/stat';
 import './App.scss';
 import Attribution from './attribution';
+import Buttons from "./buttons/buttons";
 import Chart from './chart';
-import CompareButton from './compareButton';
-import DownloadButton from "./downloadButton";
 import Downloader from "./downloader";
 import PlayerInfoHeading from "./playerInfo";
 
@@ -39,9 +38,8 @@ const App: FC<Props> = (props: Props) => {
       <div className="content">
         <PlayerInfoHeading info={info} />
         <Chart stats={stats} splitIndexes={splitIndexes} />
+        <Buttons stats={stats} info={info} id={id} />
         <Attribution />
-        <DownloadButton />
-        <CompareButton id={id} info={info} stats={stats} />
         <Downloader name={name} dataUrl={dataUrl} />
       </div>
     </div>
