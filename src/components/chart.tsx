@@ -1,4 +1,4 @@
-import * as ChartJs from 'chart.js';
+import { Chart, ChartConfiguration, ChartData, ChartDataset, DefaultDataPoint } from 'chart.js';
 import * as React from "react";
 import { FC, useCallback } from 'react';
 import Stat from '../types/stat';
@@ -37,8 +37,8 @@ function loadColorsFromCssVars(): [Color[], number, Color, Color] {
     return [colors, alpha, bg, fg];
 }
 
-const Chart: FC<Props> = (props: Props) => {
-    let chart: ChartJs | null = null;
+const RadarChart: FC<Props> = (props: Props) => {
+    let chart: Chart | null = null;
     const {
         stats,
         splitIndexes,
@@ -55,8 +55,8 @@ const Chart: FC<Props> = (props: Props) => {
         return `rgba(0, 255, 255, ${a})`;
     }
 
-    function convertToChartData(): Chart.ChartData {
-        const data: Chart.ChartData = {
+    function convertToChartData(): ChartData<'radar', number[], string> {
+        const data: ChartData<'radar', number[], string> = {
             labels: transformLabels(),
             datasets: transformValues()
         };
@@ -76,8 +76,8 @@ const Chart: FC<Props> = (props: Props) => {
         return stats.map(s => s.name);
     }
 
-    function transformValues(): Chart.ChartDataSets[] {
-        const dataSets: Chart.ChartDataSets[] = [];
+    function transformValues(): ChartDataset<'radar', number[]>[] {
+        const dataSets: ChartDataset<'radar', number[]>[] = [];
         const startingPoints = [0, ...splitIndexes];
 
         for (let i = 0; i < startingPoints.length; i++) {
@@ -106,43 +106,58 @@ const Chart: FC<Props> = (props: Props) => {
         if (node) {
             if (chart === null && stats.length > 0) {
                 const backdropColor = `rgb(${bg.r}, ${bg.g}, ${bg.b})`;
-                const fontColor = `rgb(${fg.r}, ${fg.g}, ${fg.b})`;
-                const fontSize = 20;
-                chart = new ChartJs(node, {
+                const color = `rgb(${fg.r}, ${fg.g}, ${fg.b})`;
+                const size = 20;
+
+                const config: ChartConfiguration<'radar', DefaultDataPoint<'radar'>, string> = {
                     type: 'radar',
                     data: convertToChartData(),
                     options: {
                         responsive: true,
-                        scale: {
-                            ticks: {
-                                suggestedMin: 0,
-                                suggestedMax: 100,
-                                stepSize: 20,
-                                fontColor,
-                                backdropColor,
-                                fontSize
-                            },
-                            gridLines: {
-                                color: fontColor
-                            },
-                            pointLabels: {
-                                fontColor,
-                                fontSize
-                            },
-                            angleLines: {
-                                color: fontColor
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color,
+                                    font: {
+                                        size
+                                    }
+                                },
+                                position: 'right',
+                                align: 'start'
                             }
                         },
-                        legend: {
-                            labels: {
-                                fontColor,
-                                fontSize
-                            },
-                            position: 'right',
-                            align: 'start'
+                        scales: {
+                            r: {
+                                animate: true,
+                                min: 0,
+                                max: 100,
+                                suggestedMin: 0,
+                                suggestedMax: 100,
+                                angleLines: {
+                                    color
+                                },
+                                grid: {
+                                    color
+                                },
+                                ticks: {
+                                    stepSize: 20,
+                                    color,
+                                    backdropColor,
+                                    font: {
+                                        size
+                                    }
+                                },
+                                pointLabels: {
+                                    color,
+                                    font: {
+                                        size
+                                    }
+                                }
+                            }
                         }
                     }
-                });
+                };
+                chart = new Chart(node, config);
             }
         }
     }, [chart, status, splitIndexes]);
@@ -152,4 +167,4 @@ const Chart: FC<Props> = (props: Props) => {
     );
 };
 
-export default Chart;
+export default RadarChart;
