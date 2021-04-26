@@ -1,11 +1,12 @@
 import * as React from "react";
 import { FC, useState } from 'react';
-import { Command, DownloadResponseMessage, Message } from "../types/message";
+import { Command, Message } from "../types/message";
 import PlayerInfo from '../types/playerInfo';
 import Stat from '../types/stat';
 import './App.scss';
 import Attribution from './attribution';
 import Chart from './chart';
+import CompareButton from './compareButton';
 import DownloadButton from "./downloadButton";
 import Downloader from "./downloader";
 import PlayerInfoHeading from "./playerInfo";
@@ -27,8 +28,7 @@ const App: FC<Props> = (props: Props) => {
 
   chrome.runtime.onMessage.addListener((message: Message) => {
     if (message.command === Command.DownloadResponse) {
-      const drs = message as DownloadResponseMessage;
-      setDataUrl(drs.dataUrl);
+      setDataUrl(message.dataUrl);
     }
   });
 
@@ -39,6 +39,7 @@ const App: FC<Props> = (props: Props) => {
         <Chart stats={stats} splitIndexes={splitIndexes} />
         <Attribution />
         <DownloadButton />
+        <CompareButton info={info} stats={stats} />
         <Downloader name={name} dataUrl={dataUrl} />
       </div>
     </div>

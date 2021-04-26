@@ -51,6 +51,8 @@ function handleMessage(request: Message, sender: chrome.runtime.MessageSender): 
         setIcon(sender, true);
     } else if (request.command === Command.DisableIcon) {
         setIcon(sender, false);
+    } else if (request.command === Command.AddToCompare) {
+        const { info, stats } = request;
     }
 }
 
