@@ -12,6 +12,7 @@ import Downloader from "./downloader";
 import PlayerInfoHeading from "./playerInfo";
 
 interface Props {
+  id: string;
   info: PlayerInfo;
   stats: Stat[];
   splitIndexes: number[];
@@ -19,6 +20,7 @@ interface Props {
 
 const App: FC<Props> = (props: Props) => {
   const {
+    id,
     stats,
     splitIndexes,
     info,
@@ -39,7 +41,7 @@ const App: FC<Props> = (props: Props) => {
         <Chart stats={stats} splitIndexes={splitIndexes} />
         <Attribution />
         <DownloadButton />
-        <CompareButton info={info} stats={stats} />
+        <CompareButton id={id} info={info} stats={stats} />
         <Downloader name={name} dataUrl={dataUrl} />
       </div>
     </div>

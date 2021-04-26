@@ -1,3 +1,4 @@
+import db from './db';
 import { Command, Message } from "./types/message";
 
 function testUrl(url?: string): boolean {
@@ -38,7 +39,6 @@ function setIconByTabId(tabId: number | undefined, enable: boolean): void {
         "48": `icon48${suffix}`,
         "128": `icon128${suffix}`
     };
-    console.log('set icon', path, tabId);
     if (tabId) {
         chrome.action.setIcon({ tabId, path });
     }
@@ -52,7 +52,11 @@ function handleMessage(request: Message, sender: chrome.runtime.MessageSender): 
     } else if (request.command === Command.DisableIcon) {
         setIcon(sender, false);
     } else if (request.command === Command.AddToCompare) {
-        const { info, stats } = request;
+        const { player } = request;
+        db
+            .players
+            .put(player, player.id)
+            .catch(err => console.error('failed to add to db', err));
     }
 }
 
@@ -63,13 +67,11 @@ function handleClick(tab: chrome.tabs.Tab): void {
 }
 
 function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void {
-    console.log('nav', changeInfo.status, changeInfo, tab);
     if (changeInfo?.status === 'complete' && testUrl(tab?.url)) {
         //disable icon while we see if there is data
         setIconByTabId(tabId, false);
 
         // inject our payload
-        console.log('injecting');
         chrome.scripting.executeScript({
             target: { tabId, allFrames: false },
             files: ['chart.js']

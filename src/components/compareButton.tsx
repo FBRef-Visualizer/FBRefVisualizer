@@ -1,22 +1,17 @@
 import * as React from 'react';
 import { FC } from 'react';
 import { Command } from '../types/message';
-import PlayerInfo from '../types/playerInfo';
-import Stat from '../types/stat';
+import Player from '../types/player';
 import './compareButton.scss';
 
-interface Props {
-    info: PlayerInfo;
-    stats: Stat[];
+interface Props extends Player {
 }
 
 const Compare: FC<Props> = (props: Props) => {
-    const { info, stats } = props;
     function onClick(): void {
         chrome.runtime.sendMessage({
             command: Command.AddToCompare,
-            info,
-            stats
+            player: props
         });
     }
 

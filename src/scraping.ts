@@ -27,6 +27,10 @@ function loadPosition(): PlayerPosition {
     return null;
 }
 
+function getId(): string {
+    return window.location.pathname.split('/')[3];
+}
+
 function getPlayerInfo(): PlayerInfo {
     const name = loadName();
     const position = loadPosition();
@@ -101,14 +105,15 @@ export function canScrape(): boolean {
     return document.getElementById('all_scout') !== null;
 }
 
-export default function scrape(): [PlayerInfo, Stat[], number[]] | null {
+export default function scrape(): [string, PlayerInfo, Stat[], number[]] | null {
+    const id = getId();
     const info = getPlayerInfo();
     const summary = loadSummaryData(info.position);
     if (summary) {
         const lines = splitLines(summary);
         const stats = parseSummary(lines);
         const splitIndexes = getSplitIndexes(lines);
-        return [info, stats, splitIndexes];
+        return [id, info, stats, splitIndexes];
     }
     console.warn('Couldn\'t load data');
     return null;

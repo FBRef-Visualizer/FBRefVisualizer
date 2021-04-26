@@ -1,5 +1,4 @@
-import PlayerInfo from '../types/playerInfo';
-import Stat from "../types/stat";
+import Player from './player';
 
 export enum Command {
     Download,
@@ -37,8 +36,7 @@ export interface DisableIconMessage extends MessageBase {
 
 export interface AddToCompareMessage extends MessageBase {
     command: Command.AddToCompare;
-    stats: Stat[];
-    info: PlayerInfo;
+    player: Player;
 }
 
 export type Message = LaunchMessage |

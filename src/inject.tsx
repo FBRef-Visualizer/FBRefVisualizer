@@ -14,17 +14,16 @@ function insertReactDiv(): HTMLDivElement {
 function init(): void {
     const enable = canScrape();
     if (enable) {
-        console.log('enable');
         chrome.runtime.sendMessage({ command: Command.EnableIcon }, () => {
             chrome.runtime.onMessage.addListener((message: Message) => {
                 if (message.command === Command.Launch) {
                     document.getElementsByTagName('html')[0]?.classList.add('radar');
                     const scrapeResult = scrape();
                     if (scrapeResult) {
-                        const [info, stats, splitIndexes] = scrapeResult;
+                        const [id, info, stats, splitIndexes] = scrapeResult;
                         const reactDiv = insertReactDiv();
-                        console.log('loading react');
                         ReactDOM.render(<App
+                            id={id}
                             info={info}
                             stats={stats}
                             splitIndexes={splitIndexes}
