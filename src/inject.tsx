@@ -4,9 +4,20 @@ import App from "./components/App";
 import scrape, { canScrape } from './scraping';
 import { Command, Message } from "./types/message";
 
+const reactDivId = 'react-radar';
+
+function getReactDiv(): HTMLDivElement | null {
+    const element = document.getElementById(reactDivId) as HTMLDivElement;
+    return element;
+}
+
 function insertReactDiv(): HTMLDivElement {
+    const existingDiv = getReactDiv();
+    if (existingDiv) {
+        return existingDiv;
+    }
     const div = document.createElement('div');
-    div.id = 'react-radar';
+    div.id = reactDivId;
     document.body.appendChild(div);
     return div;
 }
@@ -28,6 +39,12 @@ function init(): void {
                             stats={stats}
                             splitIndexes={splitIndexes}
                         />, reactDiv);
+                    }
+                } else if (message.command === Command.Close) {
+                    document.getElementsByTagName('html')[0]?.classList.remove('radar');
+                    const element = getReactDiv();
+                    if (element) {
+                        ReactDOM.unmountComponentAtNode(element);
                     }
                 }
             });

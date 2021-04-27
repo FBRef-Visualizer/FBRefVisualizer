@@ -57,6 +57,12 @@ function handleMessage(request: Message, sender: chrome.runtime.MessageSender): 
             .players
             .put(player, player.id)
             .catch(err => console.error('failed to add to db', err));
+    } else if (request.command === Command.Close) {
+        // pass through
+        debugger;
+        if (sender.tab?.id) {
+            chrome.tabs.sendMessage(sender.tab.id, { command: Command.Close });
+        }
     }
 }
 
