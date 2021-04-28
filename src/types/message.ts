@@ -1,13 +1,14 @@
 import Player from './player';
 
+
 export enum Command {
     Download,
-    DownloadResponse,
+    DownloadDone,
     Launch,
-    DisableIcon,
-    EnableIcon,
+    SetIcon,
     AddToCompare,
-    Close
+    Close,
+    RequestLoadStatus
 }
 
 interface MessageBase {
@@ -18,8 +19,8 @@ export interface LaunchMessage extends MessageBase {
     command: Command.Launch;
 }
 
-export interface DownloadResponseMessage extends MessageBase {
-    command: Command.DownloadResponse;
+export interface DownloadDoneMessage extends MessageBase {
+    command: Command.DownloadDone;
     dataUrl: string;
 }
 
@@ -27,12 +28,9 @@ export interface DownloadMessage extends MessageBase {
     command: Command.Download;
 }
 
-export interface EnableIconMessage extends MessageBase {
-    command: Command.EnableIcon;
-}
-
-export interface DisableIconMessage extends MessageBase {
-    command: Command.DisableIcon;
+export interface SetIconMessage extends MessageBase {
+    command: Command.SetIcon;
+    status: boolean;
 }
 
 export interface AddToCompareMessage extends MessageBase {
@@ -44,10 +42,14 @@ export interface CloseMessage extends MessageBase {
     command: Command.Close;
 }
 
+export interface RequestLoadStatusMessage extends MessageBase {
+    command: Command.RequestLoadStatus;
+}
+
 export type Message = LaunchMessage |
-    DownloadResponseMessage |
+    DownloadDoneMessage |
     DownloadMessage |
-    EnableIconMessage |
-    DisableIconMessage |
+    SetIconMessage |
     AddToCompareMessage |
-    CloseMessage;
+    CloseMessage |
+    RequestLoadStatusMessage;

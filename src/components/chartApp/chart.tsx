@@ -1,7 +1,7 @@
 import { Chart, ChartConfiguration, ChartData, ChartDataset, DefaultDataPoint } from 'chart.js';
 import * as React from "react";
 import { FC, useCallback } from 'react';
-import Stat from '../types/stat';
+import Stat from '../../types/stat';
 import './chart.scss';
 
 const colorCount = 3;

@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import App from "./components/App";
+import App from "./components/chartApp/app";
 import scrape, { canScrape } from './scraping';
 import { Command, Message } from "./types/message";
 
 const reactDivId = 'react-radar';
+let status: boolean = false;
 
 function getReactDiv(): HTMLDivElement | null {
     const element = document.getElementById(reactDivId) as HTMLDivElement;
@@ -23,9 +24,9 @@ function insertReactDiv(): HTMLDivElement {
 }
 
 function init(): void {
-    const enable = canScrape();
-    if (enable) {
-        chrome.runtime.sendMessage({ command: Command.EnableIcon }, () => {
+    status = canScrape();
+    if (status) {
+        chrome.runtime.sendMessage({ command: Command.SetIcon, status: true }, () => {
             chrome.runtime.onMessage.addListener((message: Message) => {
                 if (message.command === Command.Launch) {
                     document.getElementsByTagName('html')[0]?.classList.add('radar');
@@ -51,8 +52,17 @@ function init(): void {
         });
     }
     else {
-        chrome.runtime.sendMessage({ command: Command.DisableIcon });
+        chrome.runtime.sendMessage({ command: Command.SetIcon, status: false });
         console.warn('No data to scrape');
     }
 }
 init();
+
+function requestLoadStatusListener(message: Message, _sender: chrome.runtime.MessageSender, sendResponse: (hasData: boolean) => void): void {
+    if (message.command === Command.RequestLoadStatus) {
+        console.log('got request for load status');
+        sendResponse(status);
+    }
+}
+
+chrome.runtime.onMessage.addListener(requestLoadStatusListener);

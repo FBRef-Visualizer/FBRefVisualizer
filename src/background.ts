@@ -6,7 +6,7 @@ function testUrl(url?: string): boolean {
 }
 
 function sendScreenshot(dataUrl: string, tabId: number): void {
-    chrome.tabs.sendMessage(tabId, { command: Command.DownloadResponse, dataUrl });
+    chrome.tabs.sendMessage(tabId, { command: Command.DownloadDone, dataUrl });
 }
 
 function capture(windowId: number, tabId: number): void {
@@ -44,33 +44,30 @@ function setIconByTabId(tabId: number | undefined, enable: boolean): void {
     }
 }
 
-function handleMessage(request: Message, sender: chrome.runtime.MessageSender): void {
-    if (request.command === Command.Download) {
+function handleMessage(message: Message, sender: chrome.runtime.MessageSender): void {
+    if (message.command === Command.Download) {
         download(sender);
-    } else if (request.command === Command.EnableIcon) {
-        setIcon(sender, true);
-    } else if (request.command === Command.DisableIcon) {
-        setIcon(sender, false);
-    } else if (request.command === Command.AddToCompare) {
-        const { player } = request;
+    } else if (message.command === Command.SetIcon) {
+        setIcon(sender, message.status);
+    } else if (message.command === Command.AddToCompare) {
+        const { player } = message;
         db
             .players
             .put(player, player.id)
             .catch(err => console.error('failed to add to db', err));
-    } else if (request.command === Command.Close) {
-        // pass through
-        debugger;
+    } else if (message.command === Command.Close) {
+        // pass through because it's not coming from a tab
         if (sender.tab?.id) {
             chrome.tabs.sendMessage(sender.tab.id, { command: Command.Close });
         }
     }
 }
 
-function handleClick(tab: chrome.tabs.Tab): void {
-    if (tab?.id && testUrl(tab?.url)) {
-        chrome.tabs.sendMessage(tab.id, { command: Command.Launch });
-    }
-}
+// function handleClick(tab: chrome.tabs.Tab): void {
+//     if (tab?.id && testUrl(tab?.url)) {
+//         chrome.tabs.sendMessage(tab.id, { command: Command.Launch });
+//     }
+// }
 
 function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void {
     if (changeInfo?.status === 'complete' && testUrl(tab?.url)) {
@@ -100,6 +97,6 @@ function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: ch
     }
 }
 
-chrome.action.onClicked.addListener(handleClick);
+//chrome.action.onClicked.addListener(handleClick);
 chrome.tabs.onUpdated.addListener(handleNav);
 chrome.runtime.onMessage.addListener(handleMessage);

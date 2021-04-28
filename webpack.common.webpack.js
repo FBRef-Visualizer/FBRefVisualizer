@@ -1,4 +1,5 @@
 import CopyPlugin from "copy-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 import path, { join } from "path";
 import webpack from "webpack";
 
@@ -8,7 +9,8 @@ const config = (rootDir, react, reactDom, chart) => ({
     devtool: false,
     entry: {
         background: join(__dirname, "src/background.ts"),
-        inject: join(__dirname, "src/inject.tsx")
+        inject: join(__dirname, "src/inject.tsx"),
+        popup: join(__dirname, "src/popup.tsx")
     },
     output: {
         path: join(__dirname, rootDir),
@@ -91,6 +93,11 @@ const config = (rootDir, react, reactDom, chart) => ({
         new webpack.BannerPlugin({
             banner: `Copyright ${new Date().getFullYear()} FBRefVisualizer`,
             entryOnly: true
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, "templates", "popup.html"),
+            filename: "popup.html",
+            chunks: ["popup"]
         })
     ],
     resolve: {

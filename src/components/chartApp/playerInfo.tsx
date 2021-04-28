@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC } from 'react';
-import PlayerInfo from '../types/playerInfo';
-import PlayerPosition from '../types/playerPosition';
+import PlayerInfo from '../../types/playerInfo';
+import PlayerPosition from '../../types/playerPosition';
 import './playerInfo.scss';
 
 interface Props {

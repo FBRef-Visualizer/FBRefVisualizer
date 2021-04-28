@@ -20,7 +20,7 @@ const Buttons: FC<Props> = (props: Props) => {
     useEffect(() => {
         function handleNav(message: Message): void {
             const { command } = message;
-            if (command === Command.DownloadResponse) {
+            if (command === Command.DownloadDone) {
                 setShow(true);
             }
 

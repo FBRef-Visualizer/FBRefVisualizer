@@ -1,12 +1,12 @@
 import * as React from "react";
-import { FC, useState } from 'react';
-import { Command, Message } from "../types/message";
-import PlayerInfo from '../types/playerInfo';
-import Stat from '../types/stat';
-import './App.scss';
-import Attribution from './attribution';
-import Buttons from "./buttons/buttons";
-import Chart from './chart';
+import { FC, useState } from "react";
+import { Command, Message } from "../../types/message";
+import PlayerInfo from "../../types/playerInfo";
+import Stat from "../../types/stat";
+import Buttons from ".././buttons/buttons";
+import "./app.scss";
+import Attribution from "./attribution";
+import Chart from "./chart";
 import Downloader from "./downloader";
 import PlayerInfoHeading from "./playerInfo";
 
@@ -28,7 +28,7 @@ const App: FC<Props> = (props: Props) => {
   const [dataUrl, setDataUrl] = useState<string | null>(null);
 
   chrome.runtime.onMessage.addListener((message: Message) => {
-    if (message.command === Command.DownloadResponse) {
+    if (message.command === Command.DownloadDone) {
       setDataUrl(message.dataUrl);
     }
   });
