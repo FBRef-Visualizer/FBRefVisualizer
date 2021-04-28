@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { Command } from '../../types/message';
+import { Command } from '../../../types/message';
 import Button from './button';
 import './closeButton.scss';
 

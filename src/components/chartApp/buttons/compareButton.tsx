@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { Command } from '../../types/message';
-import Player from '../../types/player';
+import { Command } from '../../../types/message';
+import Player from '../../../types/player';
 import Button from './button';
 import './compareButton.scss';
 
