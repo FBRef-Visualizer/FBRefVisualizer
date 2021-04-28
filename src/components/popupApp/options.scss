@@ -1,0 +1,38 @@
+@import '../variables';
+
+.options {
+	button {
+		display: block;
+		-webkit-appearance: none;
+		border-radius: none;
+		color: var(--link);
+		background: var(--bg);
+		border: none;
+		font-size: 1rem;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		svg {
+			width: 1.5rem;
+			margin-right: 0.5rem;
+			fill: var(--button-fg);
+		}
+
+		span {
+			text-decoration-color: var(--link-underline);
+			text-decoration: underline;
+		}
+
+		&:disabled {
+			svg {
+				fill: var(--disabled);
+			}
+			span {
+				color: var(--disabled);
+				text-decoration-color: var(--disabled);
+			}
+		}
+	}
+}
