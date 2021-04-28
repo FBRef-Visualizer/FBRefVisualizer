@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { AppContext } from './appContext';
 import "./loading.scss";
 
-interface Props {
-    loading: boolean;
-}
-
-const Loading: FC<Props> = (props: Props) => {
-    const { loading } = props;
+const Loading: FC = () => {
+    const {
+        state: {
+            loading
+        }
+    } = useContext(AppContext);
 
     if (!loading) {
         return null;

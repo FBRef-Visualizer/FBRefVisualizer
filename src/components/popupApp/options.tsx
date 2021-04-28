@@ -1,21 +1,24 @@
 import * as React from 'react';
-import { FC } from 'react';
-import sendCommandToTab from '../../helpers/sendCommandToTab';
+import { FC, useContext } from 'react';
 import { Command } from '../../types/message';
+import { AppContext } from './appContext';
+import { Actions } from './reducer';
 
-interface Props {
-    hasData: boolean;
-}
-
-const Options: FC<Props> = (props: Props) => {
-    const { hasData } = props;
+const Options: FC = () => {
+    const {
+        dispatch,
+        state: {
+            showRadar,
+            hasData
+        }
+    } = useContext(AppContext);
 
     if (!hasData) {
         return <p>No data</p>;
     }
 
     function launchChart(): void {
-        sendCommandToTab({ command: Command.Launch });
+        dispatch({ type: Actions.ToggleRadar, showRadar: true });
     }
 
     function addCompare(): void {
@@ -24,7 +27,7 @@ const Options: FC<Props> = (props: Props) => {
 
     return (
         <div className="options">
-            <button onClick={launchChart}>View Radar</button>
+            <button onClick={launchChart} disabled={showRadar}>View Radar</button>
             <button onClick={addCompare}>Add Compare</button>
         </div>
     );
