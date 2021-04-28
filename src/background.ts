@@ -26,7 +26,6 @@ function download(sender: chrome.runtime.MessageSender): void {
     }
 }
 
-
 function setIcon(sender: chrome.runtime.MessageSender, enable: boolean): void {
     const tabId = sender.tab?.id;
     setIconByTabId(tabId, enable);
@@ -44,11 +43,21 @@ function setIconByTabId(tabId: number | undefined, enable: boolean): void {
     }
 }
 
+function togglePopup(enable: boolean): void {
+    if (enable) {
+        chrome.action.setPopup({ popup: 'popup.html' });
+    } else {
+        chrome.action.setPopup({ popup: '' });
+    }
+}
+
 function handleMessage(message: Message, sender: chrome.runtime.MessageSender): void {
-    if (message.command === Command.Download) {
-        download(sender);
-    } else if (message.command === Command.SetIcon) {
+    if (message.command === Command.SetInitialState) {
         setIcon(sender, message.status);
+        togglePopup(true);
+    }
+    else if (message.command === Command.Download) {
+        download(sender);
     } else if (message.command === Command.AddToCompare) {
         const { player } = message;
         db
@@ -63,40 +72,38 @@ function handleMessage(message: Message, sender: chrome.runtime.MessageSender): 
     }
 }
 
-// function handleClick(tab: chrome.tabs.Tab): void {
-//     if (tab?.id && testUrl(tab?.url)) {
-//         chrome.tabs.sendMessage(tab.id, { command: Command.Launch });
-//     }
-// }
-
 function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void {
-    if (changeInfo?.status === 'complete' && testUrl(tab?.url)) {
-        //disable icon while we see if there is data
-        setIconByTabId(tabId, false);
-
-        // inject our payload
-        chrome.scripting.executeScript({
-            target: { tabId, allFrames: false },
-            files: ['chart.js']
-        }, () => {
-            chrome.scripting.executeScript({
-                target: { tabId, allFrames: false },
-                files: ['react.js']
-            }, () => {
+    switch (changeInfo?.status) {
+        case 'loading':
+            setIconByTabId(tabId, false);
+            togglePopup(false);
+            break;
+        case 'complete':
+            if (testUrl(tab?.url)) {
+                // inject our payload
                 chrome.scripting.executeScript({
                     target: { tabId, allFrames: false },
-                    files: ['react-dom.js']
+                    files: ['chart.js']
                 }, () => {
                     chrome.scripting.executeScript({
                         target: { tabId, allFrames: false },
-                        files: ['inject.js']
+                        files: ['react.js']
+                    }, () => {
+                        chrome.scripting.executeScript({
+                            target: { tabId, allFrames: false },
+                            files: ['react-dom.js']
+                        }, () => {
+                            chrome.scripting.executeScript({
+                                target: { tabId, allFrames: false },
+                                files: ['inject.js']
+                            });
+                        });
                     });
                 });
-            });
-        });
+            }
+            break;
     }
 }
 
-//chrome.action.onClicked.addListener(handleClick);
 chrome.tabs.onUpdated.addListener(handleNav);
 chrome.runtime.onMessage.addListener(handleMessage);

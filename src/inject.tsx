@@ -26,7 +26,7 @@ function insertReactDiv(): HTMLDivElement {
 function init(): void {
     status = canScrape();
     if (status) {
-        chrome.runtime.sendMessage({ command: Command.SetIcon, status: true }, () => {
+        chrome.runtime.sendMessage({ command: Command.SetInitialState, status: true }, () => {
             chrome.runtime.onMessage.addListener((message: Message) => {
                 if (message.command === Command.Launch) {
                     document.getElementsByTagName('html')[0]?.classList.add('radar');
@@ -52,7 +52,7 @@ function init(): void {
         });
     }
     else {
-        chrome.runtime.sendMessage({ command: Command.SetIcon, status: false });
+        chrome.runtime.sendMessage({ command: Command.SetInitialState, status: false });
         console.warn('No data to scrape');
     }
 }

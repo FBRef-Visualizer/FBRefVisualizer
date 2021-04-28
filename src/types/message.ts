@@ -5,7 +5,7 @@ export enum Command {
     Download,
     DownloadDone,
     Launch,
-    SetIcon,
+    SetInitialState,
     AddToCompare,
     Close,
     RequestLoadStatus
@@ -28,8 +28,8 @@ export interface DownloadMessage extends MessageBase {
     command: Command.Download;
 }
 
-export interface SetIconMessage extends MessageBase {
-    command: Command.SetIcon;
+export interface SetInitialStateMessage extends MessageBase {
+    command: Command.SetInitialState;
     status: boolean;
 }
 
@@ -49,7 +49,7 @@ export interface RequestLoadStatusMessage extends MessageBase {
 export type Message = LaunchMessage |
     DownloadDoneMessage |
     DownloadMessage |
-    SetIconMessage |
+    SetInitialStateMessage |
     AddToCompareMessage |
     CloseMessage |
     RequestLoadStatusMessage;
