@@ -1,6 +1,6 @@
 import { Message } from "../types/message";
 
-function sendCommandToTab(message: Message, callback?: (response: any) => void): void {
+export function sendCommandToTab(message: Message, callback?: (response: any) => void): void {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const tab = tabs[0]?.id;
         if (tab) {
@@ -9,4 +9,6 @@ function sendCommandToTab(message: Message, callback?: (response: any) => void):
     });
 }
 
-export default sendCommandToTab;
+export function sendCommandToWorker(message: Message, callback?: ((response: any) => void) | undefined): void {
+    chrome.runtime.sendMessage(message, callback);
+}

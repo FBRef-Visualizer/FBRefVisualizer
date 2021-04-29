@@ -8,7 +8,7 @@ export class FbRefVisualizerDatabase extends Dexie {
     constructor() {
         super('fbrefvisualizer-database');
         this
-            .version(1)
+            .version(2)
             .stores({
                 players: '&id,info,stats'
             });

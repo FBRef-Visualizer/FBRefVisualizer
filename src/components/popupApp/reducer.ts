@@ -1,17 +1,21 @@
-import sendCommandToTab from "../../helpers/sendCommandToTab";
+import { sendCommandToTab } from "../../helpers/sendCommandToTab";
 import { Command } from "../../types/message";
+import Player from "../../types/player";
 
 interface DefaultableState {
     loading: boolean;
     hasData: boolean;
     showRadar: boolean;
+    compare: Player[];
 }
 
 export type State = Readonly<DefaultableState>;
 
+
 export enum Actions {
     ToggleRadar,
-    InitialLoad
+    InitialLoad,
+    UpdateCompare
 }
 
 interface BaseAction {
@@ -28,7 +32,12 @@ interface InitialLoad extends BaseAction {
     hasData: boolean;
 }
 
-export type Action = ToggleRadar | InitialLoad;
+interface UpdateCompare extends BaseAction {
+    type: Actions.UpdateCompare
+    players: Player[];
+}
+
+export type Action = ToggleRadar | InitialLoad | UpdateCompare;
 
 export function reducer(state: State, action: Action): State {
     switch (action.type) {
@@ -40,7 +49,9 @@ export function reducer(state: State, action: Action): State {
             }
             return { ...state, showRadar: action.showRadar };
         case Actions.InitialLoad:
-            return { ...state, loading: false, hasData: action.hasData }
+            return { ...state, loading: false, hasData: action.hasData };
+        case Actions.UpdateCompare:
+            return { ...state, compare: action.players };
         default:
             return state;
     }
@@ -49,5 +60,6 @@ export function reducer(state: State, action: Action): State {
 export const StateDefaults: DefaultableState = ({
     loading: true,
     hasData: false,
-    showRadar: false
+    showRadar: false,
+    compare: []
 });

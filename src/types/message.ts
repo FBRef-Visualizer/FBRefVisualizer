@@ -8,7 +8,8 @@ export enum Command {
     SetInitialState,
     AddToCompare,
     Close,
-    RequestLoadStatus
+    RequestLoadStatus,
+    RequestCompare
 }
 
 interface MessageBase {
@@ -46,10 +47,15 @@ export interface RequestLoadStatusMessage extends MessageBase {
     command: Command.RequestLoadStatus;
 }
 
+export interface RequestCompareMessage extends MessageBase {
+    command: Command.RequestCompare;
+}
+
 export type Message = LaunchMessage |
     DownloadDoneMessage |
     DownloadMessage |
     SetInitialStateMessage |
     AddToCompareMessage |
     CloseMessage |
-    RequestLoadStatusMessage;
+    RequestLoadStatusMessage |
+    RequestCompareMessage;

@@ -51,7 +51,7 @@ function togglePopup(enable: boolean): void {
     }
 }
 
-function handleMessage(message: Message, sender: chrome.runtime.MessageSender): void {
+function handleMessage(message: Message, sender: chrome.runtime.MessageSender, response?: (data: any) => void): boolean {
     if (message.command === Command.SetInitialState) {
         setIcon(sender, message.status);
         togglePopup(true);
@@ -69,7 +69,23 @@ function handleMessage(message: Message, sender: chrome.runtime.MessageSender): 
         if (sender.tab?.id) {
             chrome.tabs.sendMessage(sender.tab.id, { command: Command.Close });
         }
+    } else if (message.command === Command.RequestCompare) {
+        db
+            .players
+            .toArray()
+            .then((players) => {
+                console.log('players', players);
+                if (response) {
+                    response(players);
+                }
+            })
+            .catch(ex => console.error(ex));
+        // keep the socket open
+        return true;
     }
+
+    // close the socket unless we explicity keep it open
+    return false;
 }
 
 function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void {
