@@ -2,7 +2,7 @@ import PlayerInfo from "./types/playerInfo";
 import PlayerPosition from "./types/playerPosition";
 import Stat from "./types/stat";
 
-function loadName(): string {
+export function loadName(): string {
     return document
         .querySelector('h1[itemprop=name]')?.textContent?.trim() ?? 'Unknown';
 }
@@ -27,7 +27,7 @@ function loadPosition(): PlayerPosition {
     return null;
 }
 
-function getId(): string {
+export function getId(): string {
     return window.location.pathname.split('/')[3];
 }
 

@@ -8,11 +8,12 @@ export enum Command {
     DownloadDone,
     Launch,
     SetInitialState,
+    ScrapeDataForCompare,
     AddToCompare,
     Close,
     RequestLoadStatus,
     RequestCompare,
-    RemoveFromCompare
+    RemoveFromCompare,
 }
 
 interface MessageBase {
@@ -21,6 +22,7 @@ interface MessageBase {
 
 export interface LaunchMessage extends MessageBase {
     command: Command.Launch;
+    players?: Player[];
 }
 
 export interface DownloadDoneMessage extends MessageBase {
@@ -40,6 +42,10 @@ export interface SetInitialStateMessage extends MessageBase {
 export interface AddToCompareMessage extends MessageBase {
     command: Command.AddToCompare;
     player: Player;
+}
+
+export interface ScrapeDataForCompareMessage extends MessageBase {
+    command: Command.ScrapeDataForCompare;
 }
 
 export interface CloseMessage extends MessageBase {
@@ -63,6 +69,7 @@ export type Message = LaunchMessage |
     DownloadDoneMessage |
     DownloadMessage |
     SetInitialStateMessage |
+    ScrapeDataForCompareMessage |
     AddToCompareMessage |
     CloseMessage |
     RequestLoadStatusMessage |

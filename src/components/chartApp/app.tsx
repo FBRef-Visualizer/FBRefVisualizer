@@ -38,7 +38,7 @@ const App: FC<Props> = (props: Props) => {
       <div className="content">
         <PlayerInfoHeading info={info} />
         <Chart stats={stats} splitIndexes={splitIndexes} />
-        <Buttons stats={stats} info={info} id={`${id}-${info.position}`} />
+        <Buttons />
         <Attribution />
         <Downloader name={name} dataUrl={dataUrl} />
       </div>

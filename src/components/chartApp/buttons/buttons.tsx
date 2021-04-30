@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { Command, Message } from '../../../types/message';
-import Player from '../../../types/player';
 import CloseButton from './closeButton';
-import CompareButton from './compareButton';
 import DownloadButton from './downloadButton';
 
-interface Props extends Player { }
-
-const Buttons: FC<Props> = (props: Props) => {
+const Buttons: FC = () => {
     const [show, setShow] = useState(true);
 
     useEffect(() => {
@@ -41,7 +37,6 @@ const Buttons: FC<Props> = (props: Props) => {
         <>
             <CloseButton />
             <DownloadButton hide={hide} />
-            <CompareButton {...props} />
         </>
     );
 }

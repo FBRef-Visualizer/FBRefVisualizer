@@ -10,15 +10,25 @@ import { Actions, reducer, StateDefaults } from './reducer';
 
 const Popup: FC = () => {
     const [state, dispatch] = useReducer(reducer, { ...StateDefaults });
-
+    const { refreshCompare } = state;
     useEffect(() => {
-        sendCommandToTab({ command: Command.RequestLoadStatus }, (status: boolean) => {
-            dispatch({ type: Actions.InitialLoad, hasData: status });
-        });
-        sendCommandToWorker({ command: Command.RequestCompare }, (players: Player[]) => {
-            dispatch({ type: Actions.UpdateCompare, players });
-        });
-    }, []);
+        if (refreshCompare) {
+            console.log('refreshing compare');
+            sendCommandToTab({ command: Command.RequestLoadStatus }, (data: { status: boolean; id: string; name: string; }) => {
+                dispatch({
+                    type: Actions.InitialLoad,
+                    hasData: data.status,
+                    currentPlayer: {
+                        id: data.id,
+                        name: data.name
+                    }
+                });
+            });
+            sendCommandToWorker({ command: Command.RequestCompare }, (players: Player[]) => {
+                dispatch({ type: Actions.UpdateCompare, players });
+            });
+        }
+    }, [refreshCompare]);
 
     const context: AppContextType = { state, dispatch };
 

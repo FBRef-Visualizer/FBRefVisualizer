@@ -1,6 +1,10 @@
 @import '../variables';
 
 .compare {
+	max-height: 400px;
+	overflow-y: auto;
+	padding-right: $padding;
+
 	h2 {
 		margin: 0 0 0.2rem 0;
 		font-size: 1.2rem;
@@ -29,10 +33,10 @@
 
 	.player-row {
 		display: grid;
-		grid-template-rows: auto;
+		grid-template-rows: min-content min-content;
 		grid-template-columns: min-content 1fr min-content;
-		grid-gap: 0.25rem;
-		grid-template-areas: 'check label remove';
+		grid-gap: 0 0.25rem;
+		grid-template-areas: 'check label remove' 'blank time remove';
 		align-items: center;
 
 		label {
@@ -64,6 +68,38 @@
 			overflow: hidden;
 			clip: rect(0, 0, 0, 0);
 			border: 0;
+		}
+
+		.date {
+			grid-area: time;
+			font-size: 0.75rem;
+			color: var(--text-secondary);
+			opacity: 0.8;
+		}
+	}
+}
+
+.compare-button {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	height: 2rem;
+	margin-right: $padding;
+
+	button {
+		-webkit-appearance: button;
+		color: var(--button-bg);
+		border: 1px solid var(--button-bg);
+		background: none;
+		border-radius: 0.25rem;
+		margin: 0;
+		padding: 0.5 1rem;
+		font-size: 1rem;
+		font-family: var(--font);
+		&:disabled {
+			color: var(--disabled);
+			cursor: not-allowed;
 		}
 	}
 }

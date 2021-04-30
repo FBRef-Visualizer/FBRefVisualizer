@@ -41,7 +41,7 @@ const Tabs: FC<Props> = (props: Props) => {
             {children}
         </div>
         <div className="tab-controls">
-            {Object.values(Tab).map(tab => <TabToggle tab={tab} />)}
+            {Object.values(Tab).map(tab => <TabToggle tab={tab} key={tab} />)}
         </div>
     </div>
 }

@@ -14,7 +14,7 @@
 
 	.tab-container {
 		grid-area: content;
-		padding: $padding;
+		padding: $padding 0 0 $padding;
 	}
 
 	.tab-controls {

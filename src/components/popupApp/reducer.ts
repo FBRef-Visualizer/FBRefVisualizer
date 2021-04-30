@@ -11,9 +11,15 @@ interface DefaultableState {
     tab: Tab;
     loading: boolean;
     hasData: boolean;
+    canCompare: boolean;
+    currentPlayer: {
+        id: string;
+        name: string;
+    } | null;
     showRadar: boolean;
     compare: Player[];
     selectedCompare: string[];
+    refreshCompare: boolean;
 }
 
 export type State = Readonly<DefaultableState>;
@@ -25,7 +31,8 @@ export enum Actions {
     UpdateCompare,
     ToggleSelected,
     ClearSelected,
-    RemovePlayer
+    RemovePlayer,
+    AddCurrentPlayerToCompare
 }
 
 interface BaseAction {
@@ -45,6 +52,10 @@ interface ToggleRadar extends BaseAction {
 interface InitialLoad extends BaseAction {
     type: Actions.InitialLoad
     hasData: boolean;
+    currentPlayer: {
+        id: string;
+        name: string;
+    }
 }
 
 interface UpdateCompare extends BaseAction {
@@ -67,12 +78,25 @@ interface RemovePlayer extends BaseAction {
     id: string;
 }
 
-export type Action = ChangeTab | ToggleRadar | InitialLoad | ToggleSelected | ClearSelected | UpdateCompare | RemovePlayer;
+interface AddCurrentPlayerToCompare extends BaseAction {
+    type: Actions.AddCurrentPlayerToCompare;
+}
+
+export type Action = ChangeTab |
+    ToggleRadar |
+    InitialLoad |
+    ToggleSelected |
+    ClearSelected |
+    UpdateCompare |
+    RemovePlayer |
+    AddCurrentPlayerToCompare;
 
 export function reducer(state: State, action: Action): State {
     switch (action.type) {
         case Actions.ChangeTab:
-            return { ...state, tab: action.tab };
+            if (action.tab === Tab.Compare) {
+            }
+            return { ...state, tab: action.tab, refreshCompare: action.tab === Tab.Compare ? true : state.refreshCompare };
         case Actions.ToggleRadar:
             if (action.showRadar) {
                 sendCommandToTab({ command: Command.Launch });
@@ -81,7 +105,13 @@ export function reducer(state: State, action: Action): State {
             }
             return { ...state, showRadar: action.showRadar };
         case Actions.InitialLoad:
-            return { ...state, loading: false, hasData: action.hasData };
+            return {
+                ...state,
+                loading: false,
+                hasData: action.hasData,
+                canCompare: action.hasData,
+                currentPlayer: action.currentPlayer
+            };
         case Actions.ToggleSelected:
             if (action.action === 'add') {
                 const addArray = [action.id];
@@ -99,7 +129,7 @@ export function reducer(state: State, action: Action): State {
         case Actions.ClearSelected:
             return { ...state, selectedCompare: [] };
         case Actions.UpdateCompare:
-            return { ...state, compare: action.players };
+            return { ...state, compare: action.players, refreshCompare: false };
         case Actions.RemovePlayer:
             sendCommandToWorker({ command: Command.RemoveFromCompare, id: action.id });
             return {
@@ -107,16 +137,22 @@ export function reducer(state: State, action: Action): State {
                 selectedCompare: state.selectedCompare.filter(id => id !== action.id),
                 compare: state.compare.filter(player => player.id !== action.id)
             };
+        case Actions.AddCurrentPlayerToCompare:
+            sendCommandToTab({ command: Command.ScrapeDataForCompare });
+            return { ...state, canCompare: false };
         default:
             return state;
     }
 }
 
 export const StateDefaults: DefaultableState = ({
-    tab: Tab.Compare,
+    tab: Tab.Player,
     loading: true,
     hasData: false,
+    canCompare: false,
+    currentPlayer: null,
     showRadar: false,
     compare: [],
-    selectedCompare: []
+    selectedCompare: [],
+    refreshCompare: true
 });

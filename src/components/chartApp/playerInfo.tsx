@@ -1,35 +1,11 @@
 import * as React from 'react';
 import { FC } from 'react';
+import { processName, processPosition } from '../../helpers/nameHelpers';
 import PlayerInfo from '../../types/playerInfo';
-import PlayerPosition from '../../types/playerPosition';
 import './playerInfo.scss';
 
 interface Props {
     info: PlayerInfo;
-}
-
-function processName(name: string): string {
-    switch (name) {
-        case 'Dele Alli':
-            return 'Dele';
-        default: return name;
-    }
-}
-
-function processPosition(position: PlayerPosition): string {
-    switch (position) {
-        case 'attacking mid':
-            return 'Attacking Midfielder/Winger';
-        case 'center back':
-            return 'Center Back';
-        case 'forward':
-            return 'Forward';
-        case 'fullback':
-            return 'Fullback';
-        case 'midfield':
-            return 'Midfielder';
-        default: return 'Unknown';
-    }
 }
 
 const PlayerInfo: FC<Props> = (props: Props) => {
