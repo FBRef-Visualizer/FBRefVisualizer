@@ -5,9 +5,7 @@ import { Command } from '../../types/message';
 import Player from '../../types/player';
 import "./app.scss";
 import { AppContext, AppContextType } from './appContext';
-import Compare from './compare';
-import Loading from './loading';
-import Options from './options';
+import Layout from './layout';
 import { Actions, reducer, StateDefaults } from './reducer';
 
 const Popup: FC = () => {
@@ -26,11 +24,7 @@ const Popup: FC = () => {
 
     return (
         <AppContext.Provider value={context}>
-            <div className="popup">
-                <Loading />
-                <Options />
-                <Compare />
-            </div>
+            <Layout />
         </AppContext.Provider>
     );
 };

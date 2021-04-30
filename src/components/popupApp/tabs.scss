@@ -1,0 +1,50 @@
+@import '../variables';
+
+.tabs {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: grid;
+	grid-template-rows: 1fr min-content;
+	grid-template-columns: 1fr;
+	grid-template-areas: 'content' 'controls';
+	grid-gap: 0.5rem;
+
+	.tab-container {
+		grid-area: content;
+		padding: $padding;
+	}
+
+	.tab-controls {
+		grid-area: controls;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: stretch;
+		width: 100%;
+	}
+
+	.tab-button {
+		display: block;
+		width: 100%;
+		-webkit-appearance: none;
+		outline: none;
+		border: 1px solid transparent;
+		border-top: none;
+		border-bottom: none;
+		background: var(--button-bg);
+		color: var(--button-fg);
+		height: 2rem;
+		font-family: var(--font);
+		font-size: 1rem;
+
+		&:disabled {
+			box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.25);
+		}
+
+		+ .tab-button {
+			border-left-color: var(--button-accent);
+		}
+	}
+}

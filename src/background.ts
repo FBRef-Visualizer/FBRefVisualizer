@@ -64,6 +64,11 @@ function handleMessage(message: Message, sender: chrome.runtime.MessageSender, r
             .players
             .put(player, player.id)
             .catch(err => console.error('failed to add to db', err));
+    } else if (message.command === Command.RemoveFromCompare) {
+        db
+            .players
+            .delete(message.id)
+            .catch(ex => console.error(ex));
     } else if (message.command === Command.Close) {
         // pass through because it's not coming from a tab
         if (sender.tab?.id) {
@@ -89,13 +94,13 @@ function handleMessage(message: Message, sender: chrome.runtime.MessageSender, r
 }
 
 function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void {
-    switch (changeInfo?.status) {
-        case 'loading':
-            setIconByTabId(tabId, false);
-            togglePopup(false);
-            break;
-        case 'complete':
-            if (testUrl(tab?.url)) {
+    if (testUrl(tab?.url)) {
+        switch (changeInfo?.status) {
+            case 'loading':
+                setIconByTabId(tabId, false);
+                togglePopup(false);
+                break;
+            case 'complete':
                 // inject our payload
                 chrome.scripting.executeScript({
                     target: { tabId, allFrames: false },
@@ -116,8 +121,9 @@ function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: ch
                         });
                     });
                 });
-            }
-            break;
+
+                break;
+        }
     }
 }
 

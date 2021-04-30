@@ -1,6 +1,8 @@
 import Player from './player';
 
 
+
+
 export enum Command {
     Download,
     DownloadDone,
@@ -9,7 +11,8 @@ export enum Command {
     AddToCompare,
     Close,
     RequestLoadStatus,
-    RequestCompare
+    RequestCompare,
+    RemoveFromCompare
 }
 
 interface MessageBase {
@@ -51,6 +54,11 @@ export interface RequestCompareMessage extends MessageBase {
     command: Command.RequestCompare;
 }
 
+export interface RemoveFromCompare extends MessageBase {
+    command: Command.RemoveFromCompare;
+    id: string;
+}
+
 export type Message = LaunchMessage |
     DownloadDoneMessage |
     DownloadMessage |
@@ -58,4 +66,5 @@ export type Message = LaunchMessage |
     AddToCompareMessage |
     CloseMessage |
     RequestLoadStatusMessage |
-    RequestCompareMessage;
+    RequestCompareMessage |
+    RemoveFromCompare;

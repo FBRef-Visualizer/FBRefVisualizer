@@ -2,6 +2,10 @@
 @import '../defaults';
 
 .popup {
-	min-width: 200px;
-	min-height: 300px;
+	width: 300px;
+	min-height: 500px;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--font);
+	position: relative;
 }

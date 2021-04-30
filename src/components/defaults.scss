@@ -20,6 +20,10 @@
 
 	--button-bg: var(--theme);
 	--button-fg: var(--link-underline);
+	--button-accent: var(--theme-secondary);
+
+	--font: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+	--font-size: 20px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,16 +40,25 @@
 		--link-underline: var(--theme-secondary);
 		--alpha: 0.96;
 
-		--button-bg: var(--theme);
 		--button-fg: var(--fg);
 	}
 }
 
 html.radar,
 html.popup {
+	box-sizing: border-box;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
+	}
+
 	&,
 	& body {
-		font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-		font-size: 20px;
+		margin: 0;
+		padding: 0;
+		font-family: var(--font);
+		font-size: var(--font-size);
 	}
 }

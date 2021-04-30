@@ -18,6 +18,7 @@
 	align-items: center;
 	position: absolute;
 	bottom: $padding;
+	font-family: var(--font);
 
 	&:focus {
 		outline: none;
