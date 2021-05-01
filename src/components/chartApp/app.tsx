@@ -5,7 +5,7 @@ import Player from "../../types/player";
 import "./app.scss";
 import Attribution from "./attribution";
 import Buttons from "./buttons/buttons";
-import Chart from "./chart";
+import Chart from "./charts/chart";
 import Downloader from "./downloader";
 import PlayerInfoHeading from "./playerInfo";
 
