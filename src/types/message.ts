@@ -63,8 +63,7 @@ export interface RemoveFromCompare extends MessageBase {
 export interface InitialLoadComplete extends MessageBase {
     command: Command.InitialLoadComplete;
     status: boolean;
-    id: string;
-    name: string;
+    name: string | null;
 }
 
 export type Message = LaunchMessage |

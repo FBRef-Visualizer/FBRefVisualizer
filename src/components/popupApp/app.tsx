@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FC, useEffect, useReducer } from 'react';
-import { sendCommandToTab, sendCommandToWorker } from '../../helpers/sendCommandToTab';
+import { queryCurrentTab, sendCommandToTab, sendCommandToWorker } from '../../helpers/chromeHelpers';
+import { testUrl } from '../../helpers/urlHelpers';
 import { Command, Message } from '../../types/message';
 import Player from '../../types/player';
 import "./app.scss";
@@ -13,16 +14,17 @@ const Popup: FC = () => {
     const { refreshCompare } = state;
 
     useEffect(() => {
+        // we need two actions.
+        // one if the popup loads before inject has run
+        // the other if the popup loads if inject has already run
+
         // this pulls the status if inject.js has already run
-        sendCommandToTab({ command: Command.RequestLoadStatus }, (data: { status: boolean; id: string; name: string; }) => {
+        sendCommandToTab({ command: Command.RequestLoadStatus }, (data: { status: boolean; name: string | null; }) => {
             console.log('done rc', data);
             dispatch({
                 type: Actions.InitialLoad,
                 hasData: data.status,
-                currentPlayer: {
-                    id: data.id,
-                    name: data.name
-                }
+                currentPlayer: data.name
             });
         });
 
@@ -32,14 +34,10 @@ const Popup: FC = () => {
                 dispatch({
                     type: Actions.InitialLoad,
                     hasData: message.status,
-                    currentPlayer: {
-                        id: message.id,
-                        name: message.name
-                    }
+                    currentPlayer: message.name
                 });
             }
         });
-
     }, []);
 
     useEffect(() => {
@@ -50,6 +48,16 @@ const Popup: FC = () => {
             });
         }
     }, [refreshCompare]);
+
+    useEffect(() => {
+        queryCurrentTab(tab => {
+            if (tab && tab.url) {
+                if (!testUrl(tab.url)) {
+                    dispatch({ type: Actions.SetNotOnFbRef });
+                }
+            }
+        });
+    }, []);
 
     const context: AppContextType = { state, dispatch };
 

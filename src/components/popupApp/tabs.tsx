@@ -35,6 +35,11 @@ interface Props {
 
 const Tabs: FC<Props> = (props: Props) => {
     const { children } = props;
+    const { state: { isOnFbRef } } = useContext(AppContext);
+
+    if (!isOnFbRef) {
+        return null;
+    }
 
     return <div className="tabs">
         <div className="tab-container">

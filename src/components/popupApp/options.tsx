@@ -14,7 +14,8 @@ const Options: FC = () => {
             showRadar,
             hasData,
             canCompare,
-            loading
+            loading,
+            currentPlayer
         }
     } = useContext(AppContext);
 
@@ -37,6 +38,7 @@ const Options: FC = () => {
 
     return (
         <div className="options">
+            {currentPlayer ? <h2>{currentPlayer}</h2> : null}
             <button onClick={launchChart} disabled={showRadar}>
                 <Icon iconType={showRadar ? IconType.Check : IconType.View} />
                 <span className="label">

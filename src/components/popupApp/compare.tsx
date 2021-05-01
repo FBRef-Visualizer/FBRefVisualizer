@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC, useContext, useState } from 'react';
+import { sendCommandToTab } from '../../helpers/chromeHelpers';
 import { processPosition } from '../../helpers/nameHelpers';
-import { sendCommandToTab } from '../../helpers/sendCommandToTab';
 import { formatTime } from '../../helpers/time';
 import { Command } from '../../types/message';
 import Player from '../../types/player';

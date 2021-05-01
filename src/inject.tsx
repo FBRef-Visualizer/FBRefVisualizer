@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import App from "./components/chartApp/app";
-import { sendCommandToWorker } from "./helpers/sendCommandToTab";
+import { sendCommandToWorker } from "./helpers/chromeHelpers";
 import scrape, { canScrape, getId, loadName } from './scraping';
 import { Command, Message } from "./types/message";
 import Player from "./types/player";
@@ -118,8 +118,7 @@ function init(): void {
     sendCommandToWorker({
         command: Command.InitialLoadComplete,
         status,
-        id: status ? getId() : 'n/a',
-        name: status ? loadName() : 'n/a'
+        name: status ? loadName() : null
     });
 }
 init();

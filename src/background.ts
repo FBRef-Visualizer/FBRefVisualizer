@@ -1,9 +1,6 @@
 import db from './db';
+import { testUrl } from './helpers/urlHelpers';
 import { Command, Message } from "./types/message";
-
-function testUrl(url?: string): boolean {
-    return url?.startsWith('https://fbref.com/') === true;
-}
 
 function sendScreenshot(dataUrl: string, tabId: number): void {
     chrome.tabs.sendMessage(tabId, { command: Command.DownloadDone, dataUrl });
@@ -61,7 +58,7 @@ function handleMessage(message: Message, sender: chrome.runtime.MessageSender, r
         if (sender.tab?.id) {
             chrome.tabs.sendMessage(sender.tab.id, {
                 command: Command.InitialLoadComplete,
-                id: message.id,
+                status: message.status,
                 name: message.name
             });
         }

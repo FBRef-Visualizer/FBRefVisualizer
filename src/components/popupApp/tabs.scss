@@ -1,6 +1,7 @@
 @import '../variables';
 @import '../mixins';
 .tabs {
+	min-height: 510px;
 	position: absolute;
 	top: 0;
 	right: 0;

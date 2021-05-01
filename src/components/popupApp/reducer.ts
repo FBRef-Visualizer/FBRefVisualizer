@@ -1,4 +1,4 @@
-import { sendCommandToTab, sendCommandToWorker } from "../../helpers/sendCommandToTab";
+import { sendCommandToTab, sendCommandToWorker } from "../../helpers/chromeHelpers";
 import { Command } from "../../types/message";
 import Player from "../../types/player";
 
@@ -8,14 +8,12 @@ export enum Tab {
 }
 
 interface DefaultableState {
+    isOnFbRef: boolean;
     tab: Tab;
     loading: boolean;
     hasData: boolean;
     canCompare: boolean;
-    currentPlayer: {
-        id: string;
-        name: string;
-    } | null;
+    currentPlayer: string | null;
     showRadar: boolean;
     compare: Player[];
     selectedCompare: string[];
@@ -25,6 +23,7 @@ interface DefaultableState {
 export type State = Readonly<DefaultableState>;
 
 export enum Actions {
+    SetNotOnFbRef,
     ChangeTab,
     ToggleRadar,
     InitialLoad,
@@ -37,6 +36,10 @@ export enum Actions {
 
 interface BaseAction {
     type: Actions;
+}
+
+interface SetNotOnFbRef extends BaseAction {
+    type: Actions.SetNotOnFbRef
 }
 
 interface ChangeTab extends BaseAction {
@@ -52,10 +55,7 @@ interface ToggleRadar extends BaseAction {
 interface InitialLoad extends BaseAction {
     type: Actions.InitialLoad
     hasData: boolean;
-    currentPlayer: {
-        id: string;
-        name: string;
-    }
+    currentPlayer: string | null;
 }
 
 interface UpdateCompare extends BaseAction {
@@ -82,7 +82,8 @@ interface AddCurrentPlayerToCompare extends BaseAction {
     type: Actions.AddCurrentPlayerToCompare;
 }
 
-export type Action = ChangeTab |
+export type Action = SetNotOnFbRef |
+    ChangeTab |
     ToggleRadar |
     InitialLoad |
     ToggleSelected |
@@ -94,6 +95,8 @@ export type Action = ChangeTab |
 export function reducer(state: State, action: Action): State {
     console.log('action', action);
     switch (action.type) {
+        case Actions.SetNotOnFbRef:
+            return { ...state, isOnFbRef: false };
         case Actions.ChangeTab:
             if (action.tab === Tab.Compare) {
             }
@@ -111,7 +114,8 @@ export function reducer(state: State, action: Action): State {
                 loading: false,
                 hasData: action.hasData,
                 canCompare: action.hasData,
-                currentPlayer: action.currentPlayer
+                currentPlayer: action.currentPlayer,
+                tab: action.hasData ? Tab.Player : Tab.Compare
             };
         case Actions.ToggleSelected:
             if (action.action === 'add') {
@@ -147,6 +151,7 @@ export function reducer(state: State, action: Action): State {
 }
 
 export const StateDefaults: DefaultableState = ({
+    isOnFbRef: true,
     tab: Tab.Player,
     loading: true,
     hasData: false,
