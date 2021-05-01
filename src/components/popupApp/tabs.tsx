@@ -1,33 +1,9 @@
 import * as React from 'react';
 import { FC, ReactElement, useContext } from 'react';
 import { AppContext } from './appContext';
-import { Actions, Tab } from './reducer';
+import { Tab } from './reducer';
 import './tabs.scss';
-
-interface TabToggleProps {
-    tab: Tab;
-}
-
-const TabToggle: FC<TabToggleProps> = (props: TabToggleProps) => {
-    const { tab: thisTab } = props;
-    const {
-        dispatch,
-        state: {
-            tab: currentTab
-        }
-    } = useContext(AppContext);
-    const isCurrentTab = thisTab === currentTab;
-
-    function onClick(): void {
-        dispatch({ type: Actions.ChangeTab, tab: thisTab });
-    }
-
-    return (
-        <button className={`tab-button tab-button-${thisTab.toLocaleString()}`} disabled={isCurrentTab} onClick={onClick}>
-            {thisTab.toLocaleString()}
-        </button>
-    );
-};
+import TabToggle from './tabToggle';
 
 interface Props {
     children: ReactElement | ReactElement[];

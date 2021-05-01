@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC, useContext } from 'react';
 import { AppContext } from './appContext';
-import Compare from './compare';
+import Compare from './compare/compare';
 import Loading from './loading';
 import NoFbRef from './noFbRef';
 import Options from './options';
