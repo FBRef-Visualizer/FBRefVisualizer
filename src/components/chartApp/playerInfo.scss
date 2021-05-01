@@ -10,13 +10,16 @@
 .player-info .player-name,
 .player-info .player-position {
 	margin: 0;
+	max-width: 320px;
 }
 
 .player-info .player-name {
 	color: var(--fg);
 	margin: 0;
+	font-size: 1.25rem;
 }
 
 .player-info .player-position {
 	color: var(--text-secondary);
+	font-size: 1.1rem;
 }

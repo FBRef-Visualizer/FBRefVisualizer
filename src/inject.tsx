@@ -4,6 +4,7 @@ import App from "./components/chartApp/app";
 import { sendCommandToWorker } from "./helpers/sendCommandToTab";
 import scrape, { canScrape, getId, loadName } from './scraping';
 import { Command, Message } from "./types/message";
+import Player from "./types/player";
 
 const reactDivId = 'react-radar';
 let status: boolean = false;
@@ -55,20 +56,28 @@ function scrapeDataForCompareListener(message: Message): void {
 
 function launchListener(message: Message): void {
     if (message.command === Command.Launch) {
-        if (message.players) {
-            console.log('players', message.players);
+        let players: Player[] = message.players ? message.players : [];
+        let splitIndexes: number[] | null = null;
+
+        if (players.length === 0) {
+            const scrapeResult = scrape();
+            if (scrapeResult) {
+                const [id, info, stats, si] = scrapeResult;
+                splitIndexes = si;
+                players.push({
+                    id,
+                    info,
+                    stats,
+                    timestamp: new Date()
+                });
+            }
         }
 
-
-        document.getElementsByTagName('html')[0]?.classList.add('radar');
-        const scrapeResult = scrape();
-        if (scrapeResult) {
-            const [id, info, stats, splitIndexes] = scrapeResult;
+        if (players.length > 0) {
+            document.getElementsByTagName('html')[0]?.classList.add('radar');
             const reactDiv = insertReactDiv();
             ReactDOM.render(<App
-                id={id}
-                info={info}
-                stats={stats}
+                players={players}
                 splitIndexes={splitIndexes}
             />, reactDiv);
         }

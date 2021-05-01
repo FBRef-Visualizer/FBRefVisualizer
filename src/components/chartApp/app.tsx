@@ -1,8 +1,7 @@
 import * as React from "react";
 import { FC, useState } from "react";
 import { Command, Message } from "../../types/message";
-import PlayerInfo from "../../types/playerInfo";
-import Stat from "../../types/stat";
+import Player from "../../types/player";
 import "./app.scss";
 import Attribution from "./attribution";
 import Buttons from "./buttons/buttons";
@@ -11,20 +10,23 @@ import Downloader from "./downloader";
 import PlayerInfoHeading from "./playerInfo";
 
 interface Props {
-  id: string;
-  info: PlayerInfo;
-  stats: Stat[];
-  splitIndexes: number[];
+  players: Player[];
+  splitIndexes: number[] | null;
+}
+
+function getName(players: Player[]): string {
+  if (players.length < 2) {
+    return players[0].info.name;
+  }
+  return players.map(p => p.info.name).join(' vs. ');
 }
 
 const App: FC<Props> = (props: Props) => {
   const {
-    id,
-    stats,
-    splitIndexes,
-    info,
+    players,
+    splitIndexes
   } = props;
-  const { name } = info;
+  const name = getName(players);
   const [dataUrl, setDataUrl] = useState<string | null>(null);
 
   chrome.runtime.onMessage.addListener((message: Message) => {
@@ -36,8 +38,8 @@ const App: FC<Props> = (props: Props) => {
   return (
     <div className="stats-radar">
       <div className="content">
-        <PlayerInfoHeading info={info} />
-        <Chart stats={stats} splitIndexes={splitIndexes} />
+        <PlayerInfoHeading name={name} position={players[0].info.position} />
+        <Chart players={players} splitIndexes={splitIndexes} />
         <Buttons />
         <Attribution />
         <Downloader name={name} dataUrl={dataUrl} />
