@@ -35,9 +35,14 @@ function insertReactDiv(): HTMLDivElement {
 
 function requestLoadStatusListener(message: Message, _sender: chrome.runtime.MessageSender, sendResponse: (data: { status: boolean; id: string; name: string; }) => void): void {
     if (message.command === Command.RequestLoadStatus) {
-        const name = loadName();
-        const id = getId();
-        sendResponse({ status, id, name });
+        console.log('rlc fired');
+        if (status) {
+            const name = loadName();
+            const id = getId();
+            sendResponse({ status, id, name });
+        } else {
+            sendResponse({ status: false, id: 'n/a', name: 'n/a' })
+        }
     }
 }
 
@@ -102,16 +107,19 @@ function closeListener(message: Message): void {
 function init(): void {
     status = canScrape();
     if (status) {
-        chrome.runtime.sendMessage({ command: Command.SetInitialState, status: true }, () => {
-            chrome.runtime.onMessage.addListener(requestLoadStatusListener);
-            chrome.runtime.onMessage.addListener(scrapeDataForCompareListener);
-            chrome.runtime.onMessage.addListener(launchListener);
-            chrome.runtime.onMessage.addListener(closeListener);
-        });
+        // only listen for scrape requests if we can actually scrape data
+        chrome.runtime.onMessage.addListener(scrapeDataForCompareListener);
     }
-    else {
-        chrome.runtime.sendMessage({ command: Command.SetInitialState, status: false });
-        console.warn('No data to scrape');
-    }
+    // we want these to run regardless of if there is data
+    chrome.runtime.onMessage.addListener(launchListener);
+    chrome.runtime.onMessage.addListener(closeListener);
+    chrome.runtime.onMessage.addListener(requestLoadStatusListener);
+
+    sendCommandToWorker({
+        command: Command.InitialLoadComplete,
+        status,
+        id: status ? getId() : 'n/a',
+        name: status ? loadName() : 'n/a'
+    });
 }
 init();

@@ -92,6 +92,7 @@ export type Action = ChangeTab |
     AddCurrentPlayerToCompare;
 
 export function reducer(state: State, action: Action): State {
+    console.log('action', action);
     switch (action.type) {
         case Actions.ChangeTab:
             if (action.tab === Tab.Compare) {

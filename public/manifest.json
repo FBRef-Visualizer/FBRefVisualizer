@@ -5,7 +5,8 @@
       "48": "icon48.png",
       "128": "icon128.png"
     },
-    "default_title": "FBRef Visualizer"
+    "default_title": "FBRef Visualizer",
+    "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js"

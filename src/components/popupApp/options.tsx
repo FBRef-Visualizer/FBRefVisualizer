@@ -13,13 +13,10 @@ const Options: FC = () => {
         state: {
             showRadar,
             hasData,
-            canCompare
+            canCompare,
+            loading
         }
     } = useContext(AppContext);
-
-    if (!hasData) {
-        return <p>No data</p>;
-    }
 
     function launchChart(): void {
         dispatch({ type: Actions.ToggleRadar, showRadar: true });
@@ -28,6 +25,14 @@ const Options: FC = () => {
     function addCompare(): void {
         dispatch({ type: Actions.AddCurrentPlayerToCompare });
         setCompareClicked(true);
+    }
+
+    if (loading) {
+        return null;
+    }
+
+    if (!hasData) {
+        return <p>No data available to scrape.</p>;
     }
 
     return (

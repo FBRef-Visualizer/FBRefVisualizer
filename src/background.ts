@@ -2,7 +2,7 @@ import db from './db';
 import { Command, Message } from "./types/message";
 
 function testUrl(url?: string): boolean {
-    return url?.startsWith('https://fbref.com/en/players/') === true;
+    return url?.startsWith('https://fbref.com/') === true;
 }
 
 function sendScreenshot(dataUrl: string, tabId: number): void {
@@ -26,11 +26,6 @@ function download(sender: chrome.runtime.MessageSender): void {
     }
 }
 
-function setIcon(sender: chrome.runtime.MessageSender, enable: boolean): void {
-    const tabId = sender.tab?.id;
-    setIconByTabId(tabId, enable);
-}
-
 function setIconByTabId(tabId: number | undefined, enable: boolean): void {
     const suffix = enable ? '.png' : '-disabled.png';
     const path = {
@@ -43,20 +38,8 @@ function setIconByTabId(tabId: number | undefined, enable: boolean): void {
     }
 }
 
-function togglePopup(enable: boolean): void {
-    if (enable) {
-        chrome.action.setPopup({ popup: 'popup.html' });
-    } else {
-        chrome.action.setPopup({ popup: '' });
-    }
-}
-
 function handleMessage(message: Message, sender: chrome.runtime.MessageSender, response?: (data: any) => void): boolean {
-    if (message.command === Command.SetInitialState) {
-        setIcon(sender, message.status);
-        togglePopup(true);
-    }
-    else if (message.command === Command.Download) {
+    if (message.command === Command.Download) {
         download(sender);
     } else if (message.command === Command.AddToCompare) {
         const { player } = message;
@@ -74,7 +57,16 @@ function handleMessage(message: Message, sender: chrome.runtime.MessageSender, r
         if (sender.tab?.id) {
             chrome.tabs.sendMessage(sender.tab.id, { command: Command.Close });
         }
-    } else if (message.command === Command.RequestCompare) {
+    } else if (message.command === Command.InitialLoadComplete) {
+        if (sender.tab?.id) {
+            chrome.tabs.sendMessage(sender.tab.id, {
+                command: Command.InitialLoadComplete,
+                id: message.id,
+                name: message.name
+            });
+        }
+    }
+    else if (message.command === Command.RequestCompare) {
         db
             .players
             .toArray()
@@ -95,35 +87,31 @@ function handleMessage(message: Message, sender: chrome.runtime.MessageSender, r
 
 function handleNav(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): void {
     if (testUrl(tab?.url)) {
-        switch (changeInfo?.status) {
-            case 'loading':
-                setIconByTabId(tabId, false);
-                togglePopup(false);
-                break;
-            case 'complete':
-                // inject our payload
+        setIconByTabId(tabId, true);
+        if (changeInfo?.status === 'complete') {
+            // inject our payload
+            chrome.scripting.executeScript({
+                target: { tabId, allFrames: false },
+                files: ['chart.js']
+            }, () => {
                 chrome.scripting.executeScript({
                     target: { tabId, allFrames: false },
-                    files: ['chart.js']
+                    files: ['react.js']
                 }, () => {
                     chrome.scripting.executeScript({
                         target: { tabId, allFrames: false },
-                        files: ['react.js']
+                        files: ['react-dom.js']
                     }, () => {
                         chrome.scripting.executeScript({
                             target: { tabId, allFrames: false },
-                            files: ['react-dom.js']
-                        }, () => {
-                            chrome.scripting.executeScript({
-                                target: { tabId, allFrames: false },
-                                files: ['inject.js']
-                            });
+                            files: ['inject.js']
                         });
                     });
                 });
-
-                break;
+            });
         }
+    } else {
+        setIconByTabId(tabId, false);
     }
 }
 
