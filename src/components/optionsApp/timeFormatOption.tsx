@@ -50,7 +50,7 @@ const TimeFormatOption: FC<Props> = ({ defaultOptions }: Props) => {
                     <input
                         type="radio"
                         name="time"
-                        id="2412"
+                        id="24"
                         value={24}
                         onChange={onChange}
                         checked={format === 24}

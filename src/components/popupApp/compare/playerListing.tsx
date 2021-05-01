@@ -16,7 +16,7 @@ const PlayerListing: FC<Player> = (props: Player) => {
         timestamp
     } = props;
 
-    const { state, dispatch } = useContext(AppContext);
+    const { state, dispatch, options: { timeFormat } } = useContext(AppContext);
     const { selectedCompare } = state;
 
     const isSelected = selectedCompare.indexOf(id) >= 0;
@@ -40,7 +40,7 @@ const PlayerListing: FC<Player> = (props: Player) => {
                 <Icon iconType={IconType.Trash} />
             </button>
             <div className="date">
-                {formatTime(timestamp)}
+                {formatTime(timestamp, timeFormat)}
             </div>
         </li>
     );

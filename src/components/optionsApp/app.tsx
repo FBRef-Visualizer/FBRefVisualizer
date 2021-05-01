@@ -12,7 +12,6 @@ const App: FC = () => {
 
     useEffect(() => {
         loadOptions(loadedOptions => {
-            console.log('options loaded', loadedOptions);
             setOptions(loadedOptions);
         });
     }, [loadOptions]);

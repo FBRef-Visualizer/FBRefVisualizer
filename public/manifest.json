@@ -28,8 +28,8 @@
   "manifest_version": 3,
   "name": "FBRef Visualizer",
   "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
+    "open_in_tab": false,
+    "page": "options.html"
   },
   "permissions": [
     "activeTab",

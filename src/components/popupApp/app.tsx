@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FC, useEffect, useReducer } from 'react';
 import { queryCurrentTab, sendCommandToTab, sendCommandToWorker } from '../../helpers/chromeHelpers';
 import { testUrl } from '../../helpers/urlHelpers';
+import useOptions from '../../hooks/useOptions';
 import { Command, Message } from '../../types/message';
 import Player from '../../types/player';
 import "./app.scss";
@@ -10,6 +11,7 @@ import Layout from './layout';
 import { Actions, reducer, StateDefaults } from './reducer';
 
 const Popup: FC = () => {
+    const { options, loaded } = useOptions();
     const [state, dispatch] = useReducer(reducer, { ...StateDefaults });
     const { refreshCompare } = state;
 
@@ -59,7 +61,15 @@ const Popup: FC = () => {
         });
     }, []);
 
-    const context: AppContextType = { state, dispatch };
+    const context: AppContextType = {
+        state,
+        dispatch,
+        options
+    };
+
+    if (!loaded) {
+        return null;
+    }
 
     return (
         <AppContext.Provider value={context}>

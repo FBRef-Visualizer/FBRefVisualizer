@@ -1,3 +1,5 @@
+import { TimeFormat } from "../types/options";
+
 const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -13,8 +15,25 @@ function datesAreOnSameDay(first: Date, second: Date): boolean {
         first.getDate() === second.getDate();
 }
 
-function getClockTime(date: Date): string {
-    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+function getClockTime(date: Date, timeFormat: TimeFormat): string {
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    if (timeFormat === 12) {
+        let ap: 'AM' | 'PM' = 'AM';
+        let hours = date.getHours();
+
+        if (hours === 0) {
+            hours = 12;
+        } else if (hours > 12) {
+            hours -= 12;
+            ap = 'PM';
+        }
+        return `${hours}:${minutes} ${ap}`;
+    } else {
+        return `${hours}:${minutes}`;
+    }
 }
 
 function getFriendlyDate(date: Date, now: Date): string {
@@ -30,7 +49,7 @@ function getFriendlyDate(date: Date, now: Date): string {
 
 }
 
-export function formatTime(date?: Date | string | number): string {
+export function formatTime(date?: Date | string | number, timeFormat: TimeFormat = 12): string {
     if (!date) {
         return '';
     }
@@ -40,8 +59,8 @@ export function formatTime(date?: Date | string | number): string {
 
 
     if (datesAreOnSameDay(parsedDate, now)) {
-        return `Today - ${getClockTime(parsedDate)}`;
+        return `Today - ${getClockTime(parsedDate, timeFormat)}`;
     }
 
-    return `${getFriendlyDate(parsedDate, now)} - ${getClockTime(parsedDate)}`;
+    return `${getFriendlyDate(parsedDate, now)} - ${getClockTime(parsedDate, timeFormat)}`;
 }

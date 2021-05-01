@@ -1,5 +1,5 @@
 import { Message } from "../types/message";
-import { Options } from '../types/options';
+import { defaultOptions, Options } from '../types/options';
 export function sendCommandToTab(message: Message, callback?: (response: any) => void): void {
     queryCurrentTab((tab) => {
         if (tab && tab.id) {
@@ -31,9 +31,7 @@ export function navigateCurrentTab(url: string, callback?: () => void): void {
 }
 
 export function loadOptions(callback: (options: Options) => void): void {
-    chrome.storage.sync.get({
-        timeFormat: 12
-    }, (options) => { callback(options as Options) });
+    chrome.storage.sync.get(defaultOptions, (options) => { callback(options as Options) });
 }
 
 export function saveOptions(newOptions: Partial<Options>, callback?: (options: Options) => void): void {
