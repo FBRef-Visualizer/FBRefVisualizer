@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import Icon, { IconType } from '../generic/icon';
 import { AppContext } from './appContext';
 import "./options.scss";
 import { Actions } from './reducer';
 
 const Options: FC = () => {
+    const [compareClicked, setCompareClicked] = useState<boolean>(false);
+
     const {
         dispatch,
         state: {
@@ -25,18 +27,19 @@ const Options: FC = () => {
 
     function addCompare(): void {
         dispatch({ type: Actions.AddCurrentPlayerToCompare });
+        setCompareClicked(true);
     }
 
     return (
         <div className="options">
             <button onClick={launchChart} disabled={showRadar}>
-                <Icon iconType={IconType.View} />
+                <Icon iconType={showRadar ? IconType.Check : IconType.View} />
                 <span className="label">
                     View Radar
                 </span>
             </button>
             <button onClick={addCompare} disabled={!canCompare}>
-                <Icon iconType={IconType.Compare} />
+                <Icon iconType={compareClicked ? IconType.Check : IconType.Compare} />
                 <span className="label">
                     Add Compare
                 </span>

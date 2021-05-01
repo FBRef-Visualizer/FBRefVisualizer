@@ -9,6 +9,14 @@ import Player from "./types/player";
 const reactDivId = 'react-radar';
 let status: boolean = false;
 
+function closeReactDiv(): void {
+    document.getElementsByTagName('html')[0]?.classList.remove('radar');
+    const element = getReactDiv();
+    if (element) {
+        ReactDOM.unmountComponentAtNode(element);
+    }
+}
+
 function getReactDiv(): HTMLDivElement | null {
     const element = document.getElementById(reactDivId) as HTMLDivElement;
     return element;
@@ -56,6 +64,7 @@ function scrapeDataForCompareListener(message: Message): void {
 
 function launchListener(message: Message): void {
     if (message.command === Command.Launch) {
+        closeReactDiv();
         let players: Player[] = message.players ? message.players : [];
         let splitIndexes: number[] | null = null;
 
@@ -86,11 +95,7 @@ function launchListener(message: Message): void {
 
 function closeListener(message: Message): void {
     if (message.command === Command.Close) {
-        document.getElementsByTagName('html')[0]?.classList.remove('radar');
-        const element = getReactDiv();
-        if (element) {
-            ReactDOM.unmountComponentAtNode(element);
-        }
+        closeReactDiv();
     }
 }
 

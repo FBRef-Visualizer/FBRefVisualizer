@@ -53,7 +53,8 @@ function transformValues(props: Props, color: ColorFunction): ChartDataset<'rada
 
 const singleChart = genericChart<Props>(
     transformLabels,
-    transformValues
+    transformValues,
+    'single-chart'
 );
 
 export default singleChart;

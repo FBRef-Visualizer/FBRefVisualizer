@@ -37,6 +37,7 @@ function loadColorsFromCssVars(): CssColors {
 export default function genericChart<TProps>(
     transformLabels: (props: TProps) => string[],
     transformValues: (props: TProps, color: ColorFunction) => ChartDataset<'radar', number[]>[],
+    canvasId: string
 ): FC<TProps> {
     return (props: TProps) => {
         let chart: Chart | null = null;
@@ -121,7 +122,7 @@ export default function genericChart<TProps>(
         }, [chart, status, props]);
 
         return (
-            <canvas ref={canvasRef} className="canvas" />
+            <canvas ref={canvasRef} className="canvas" id={canvasId} key={canvasId} />
         );
 
     };

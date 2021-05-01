@@ -45,7 +45,8 @@ function transformValues(props: Props, color: ColorFunction): ChartDataset<'rada
 
 const multiChart = genericChart<Props>(
     transformLabels,
-    transformValues
+    transformValues,
+    'multi-chart'
 );
 
 export default multiChart;
