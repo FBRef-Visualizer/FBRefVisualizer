@@ -1,10 +1,11 @@
+import { processName } from "./helpers/nameHelpers";
 import PlayerInfo from "./types/playerInfo";
 import PlayerPosition from "./types/playerPosition";
 import Stat from "./types/stat";
 
 export function loadName(): string {
-    return document
-        .querySelector('h1[itemprop=name]')?.textContent?.trim() ?? 'Unknown';
+    return processName(document
+        .querySelector('h1[itemprop=name]')?.textContent?.trim() ?? 'Unknown');
 }
 
 function loadPosition(): PlayerPosition {
