@@ -45,7 +45,10 @@ const Compare: FC = () => {
         sendCommandToTab({
             command: Command.Launch,
             players: compare.filter(player => selectedCompare.indexOf(player.id) >= 0)
-        }, () => setClicked(true));
+        }, () => {
+            setClicked(true);
+            window.setTimeout(() => window.close(), 500);
+        });
     }
 
     const categoryKeys = Object.keys(groups).sort();

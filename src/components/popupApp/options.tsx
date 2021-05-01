@@ -21,6 +21,7 @@ const Options: FC = () => {
 
     function launchChart(): void {
         dispatch({ type: Actions.ToggleRadar, showRadar: true });
+        window.setTimeout(() => window.close(), 500);
     }
 
     function addCompare(): void {
