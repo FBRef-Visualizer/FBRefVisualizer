@@ -2,10 +2,10 @@ import * as React from 'react';
 import { FC, useContext } from 'react';
 import { formatTime } from '../../../helpers/time';
 import Player from '../../../types/player';
+import Check from '../../generic/check';
 import Icon, { IconType } from '../../generic/icon';
 import { AppContext } from '../appContext';
 import { Actions } from '../reducer';
-import Check from './check';
 
 const PlayerListing: FC<Player> = (props: Player) => {
     const {

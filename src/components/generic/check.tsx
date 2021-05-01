@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FC } from 'react';
-import Icon, { IconType } from '../../generic/icon';
+import './check.scss';
+import Icon, { IconType } from './icon';
 
 interface Props {
     checked: boolean;

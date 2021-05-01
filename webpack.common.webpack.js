@@ -10,7 +10,8 @@ const config = (rootDir, react, reactDom, chart) => ({
     entry: {
         background: join(__dirname, "src/background.ts"),
         inject: join(__dirname, "src/inject.tsx"),
-        popup: join(__dirname, "src/popup.tsx")
+        popup: join(__dirname, "src/popup.tsx"),
+        options: join(__dirname, 'src/options.tsx')
     },
     output: {
         path: join(__dirname, rootDir),
@@ -98,7 +99,12 @@ const config = (rootDir, react, reactDom, chart) => ({
             template: path.join(__dirname, "templates", "popup.html"),
             filename: "popup.html",
             chunks: ["popup"]
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, "templates", "options.html"),
+            filename: "options.html",
+            chunks: ["options"]
+        }),
     ],
     resolve: {
         extensions: [".js", ".jsx", ".tsx", ".ts"]

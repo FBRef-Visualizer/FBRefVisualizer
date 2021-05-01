@@ -1,5 +1,5 @@
 import { Message } from "../types/message";
-
+import { Options } from '../types/options';
 export function sendCommandToTab(message: Message, callback?: (response: any) => void): void {
     queryCurrentTab((tab) => {
         if (tab && tab.id) {
@@ -27,5 +27,22 @@ export function navigateCurrentTab(url: string, callback?: () => void): void {
                 }
             });
         }
+    });
+}
+
+export function loadOptions(callback: (options: Options) => void): void {
+    chrome.storage.sync.get({
+        timeFormat: 12
+    }, (options) => { callback(options as Options) });
+}
+
+export function saveOptions(newOptions: Partial<Options>, callback?: (options: Options) => void): void {
+    loadOptions((options) => {
+        const newOption: Options = { ...options, ...newOptions };
+        chrome.storage.sync.set(newOption, () => {
+            if (callback) {
+                callback(newOption);
+            }
+        });
     });
 }

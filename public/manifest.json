@@ -5,8 +5,8 @@
       "48": "icon48.png",
       "128": "icon128.png"
     },
-    "default_title": "FBRef Visualizer",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "FBRef Visualizer"
   },
   "background": {
     "service_worker": "background.js"
@@ -27,9 +27,14 @@
   },
   "manifest_version": 3,
   "name": "FBRef Visualizer",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "version": "1.1.0"
 }

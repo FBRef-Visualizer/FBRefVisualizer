@@ -1,0 +1,9 @@
+.checkbox {
+	fill: var(--fg);
+	grid-area: check;
+	width: 24px;
+
+	.alt {
+		fill: var(--button-bg);
+	}
+}
