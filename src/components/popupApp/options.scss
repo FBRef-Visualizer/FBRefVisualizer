@@ -1,15 +1,14 @@
 @import '../variables';
+@import '../mixins';
 
 .options {
 	button {
+		@include cleanseButton;
 		display: block;
-		-webkit-appearance: none;
 		border-radius: none;
 		color: var(--link);
 		background: var(--bg);
 		border: none;
-		font-size: 1rem;
-		font-family: var(--font);
 		display: flex;
 		justify-content: center;
 		align-items: center;

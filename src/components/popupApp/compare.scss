@@ -1,4 +1,5 @@
 @import '../variables';
+@import '../mixins';
 
 .compare {
 	max-height: 400px;
@@ -17,13 +18,12 @@
 	}
 
 	button {
-		-webkit-appearance: none;
+		@include cleanseButton;
 		background: none;
 		display: block;
 		padding: 0.2rem 0;
 		font-family: var(--font);
 		color: var(--fg);
-		font-size: 1rem;
 		border: none;
 	}
 
@@ -60,14 +60,7 @@
 		}
 
 		input[type='checkbox'] {
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			margin: -1px;
-			overflow: hidden;
-			clip: rect(0, 0, 0, 0);
-			border: 0;
+			@include sr;
 		}
 
 		.date {
@@ -88,15 +81,13 @@
 	margin: $padding $padding 0 0;
 
 	button {
-		-webkit-appearance: button;
+		@include cleanseButton;
 		color: var(--button-bg);
 		border: 1px solid var(--button-bg);
 		background: none;
 		border-radius: 0.25rem;
 		margin: 0;
 		padding: 0.15rem 1rem;
-		font-size: 1rem;
-		font-family: var(--font);
 		display: inline-flex;
 		flex-flow: row nowrap;
 		justify-content: center;

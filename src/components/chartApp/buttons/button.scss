@@ -1,11 +1,11 @@
 @import '../../variables';
-
+@import '../../mixins';
 :root {
 	--button-size: 1.5rem;
 }
 
 .button {
-	-webkit-appearance: button;
+	@include cleanseButton;
 	background-color: var(--button-bg);
 	color: var(--button-fg);
 	border: none;
@@ -19,7 +19,6 @@
 	align-items: center;
 	position: absolute;
 	bottom: $padding;
-	font-family: var(--font);
 
 	&:focus {
 		outline: none;
@@ -32,13 +31,6 @@
 	}
 
 	span {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		border: 0;
+		@include sr;
 	}
 }
