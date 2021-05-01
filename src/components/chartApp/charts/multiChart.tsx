@@ -30,7 +30,7 @@ function transformValues(props: Props, color: ColorFunction): ChartDataset<'rada
 
         dataSets.push({
             data,
-            backgroundColor: color(i, 0.1),
+            backgroundColor: color(i, 0.15),
             borderColor: color(i, 0.9),
             borderWidth: 3,
             label: sectionLabel(i),

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FC } from 'react';
+import Icon, { IconType } from '../../generic/icon';
 import Button from './button';
 import './downloadButton.scss';
 
@@ -15,9 +16,7 @@ const Download: FC<Props> = (props: Props) => {
 
     return (
         <Button label="Download" onClick={onClick} wrapperClass="download-radar">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                <path fill="var(--button-fg)" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-            </svg>
+            <Icon iconType={IconType.Download} />
         </Button>
     );
 };

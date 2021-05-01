@@ -7,6 +7,7 @@
 .button {
 	-webkit-appearance: button;
 	background-color: var(--button-bg);
+	color: var(--button-fg);
 	border: none;
 	border-radius: 50%;
 	width: var(--button-size);
@@ -23,6 +24,11 @@
 	&:focus {
 		outline: none;
 		box-shadow: 0 0 0.5rem var(--button-fg);
+	}
+
+	svg {
+		fill: var(--button-fg);
+		width: 18px;
 	}
 
 	span {
