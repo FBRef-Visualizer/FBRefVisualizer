@@ -85,7 +85,7 @@
 	justify-content: center;
 	align-items: center;
 	height: 2rem;
-	margin-right: $padding;
+	margin: $padding $padding 0 0;
 
 	button {
 		-webkit-appearance: button;
@@ -94,12 +94,31 @@
 		background: none;
 		border-radius: 0.25rem;
 		margin: 0;
-		padding: 0.5 1rem;
+		padding: 0.15rem 1rem;
 		font-size: 1rem;
 		font-family: var(--font);
+		display: inline-flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+		min-width: 180px;
 		&:disabled {
 			color: var(--disabled);
 			cursor: not-allowed;
+
+			svg {
+				fill: var(--disabled);
+			}
+		}
+
+		span {
+			flex: 0 0 auto;
+		}
+
+		svg {
+			flex: 0 0 1rem;
+			margin-right: 0.125rem;
+			fill: var(--button-bg);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { processPosition } from '../../helpers/nameHelpers';
 import { sendCommandToTab } from '../../helpers/sendCommandToTab';
 import { formatTime } from '../../helpers/time';
@@ -101,6 +101,8 @@ interface CompareGroup {
 }
 
 const Compare: FC = () => {
+    const [clicked, setClicked] = useState<boolean>(false);
+
     const {
         state: {
             compare,
@@ -126,7 +128,7 @@ const Compare: FC = () => {
         sendCommandToTab({
             command: Command.Launch,
             players: compare.filter(player => selectedCompare.indexOf(player.id) >= 0)
-        });
+        }, () => setClicked(true));
     }
 
     return (
@@ -141,7 +143,18 @@ const Compare: FC = () => {
             </div>
             <div className="compare-button">
                 <button disabled={selectedCompare.length < 2} onClick={compareClicked}>
-                    View Radar
+                    {clicked ?
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+                        </svg> :
+
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z" />
+                        </svg>
+                    }
+                    <span>
+                        View Radar
+                    </span>
                 </button>
             </div>
         </>
