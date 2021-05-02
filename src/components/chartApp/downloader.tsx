@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FC, useCallback } from 'react';
+import './downloader.scss';
 
 interface Props {
 	name: string;
