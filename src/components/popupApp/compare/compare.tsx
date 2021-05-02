@@ -37,7 +37,17 @@ const Compare: FC = () => {
 	} = useContext(AppContext);
 
 	if (!compare || compare.length === 0) {
-		return null;
+		return (
+			<p className="no-compare">
+				To compare players, navigate to a player&apos;s page on
+				{' '}
+				fbref.com and click
+				{' '}
+				<em>Add to Compare</em>
+				{' '}
+				on the Player tab.
+			</p>
+		);
 	}
 
 	const groups = getCompareGroups(compare);

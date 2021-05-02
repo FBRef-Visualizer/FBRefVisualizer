@@ -49,7 +49,7 @@ const Options: FC = () => {
 			<button onClick={addCompare} disabled={!canCompare} type="button">
 				<Icon iconType={compareClicked ? IconType.Check : IconType.Compare} />
 				<span className="label">
-					Add Compare
+					Add to Compare
 				</span>
 			</button>
 		</div>
