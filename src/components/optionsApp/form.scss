@@ -1,0 +1,26 @@
+@import '../variables';
+@import '../mixins';
+
+fieldset {
+	margin: $padding 0 0 0;
+	padding: 0;
+	border: none;
+	input[type='radio'],
+	input[type='checkbox'] {
+		@include sr;
+	}
+
+	legend {
+		font-weight: bold;
+	}
+
+	.form-group {
+		margin: $padding / 2;
+
+		&.inline {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+		}
+	}
+}

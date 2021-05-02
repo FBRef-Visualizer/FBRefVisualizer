@@ -1,5 +1,5 @@
 export default interface Stat {
-    name: string;
-    per90: number;
-    percentile: number;
+	name: string;
+	per90: number;
+	percentile: number;
 }

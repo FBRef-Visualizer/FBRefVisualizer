@@ -1,9 +1,0 @@
-@import './variables';
-
-.stats-radar .canvas {
-	padding: $padding;
-	margin: 0 auto;
-	width: calc(100vw - #{$padding * 2});
-	max-width: 75rem;
-	max-height: calc(100vh - #{$padding * 2});
-}

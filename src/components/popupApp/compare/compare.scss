@@ -1,0 +1,110 @@
+@import "../../variables";
+@import "../../mixins";
+
+.compare {
+	max-height: 400px;
+	overflow-y: auto;
+	padding-right: $padding;
+
+	h2 {
+		margin: 0 0 0.2rem 0;
+		font-size: 1.2rem;
+	}
+
+	.compare-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	button {
+		@include cleanseButton;
+		background: none;
+		display: block;
+		padding: 0.2rem 0;
+		font-family: var(--font);
+		color: var(--fg);
+		border: none;
+	}
+
+	.category + .category {
+		margin-top: 0.5rem;
+	}
+
+	.player-row {
+		display: grid;
+		grid-template-rows: min-content min-content;
+		grid-template-columns: min-content 1fr min-content;
+		grid-gap: 0 0.25rem;
+		grid-template-areas: "check label remove" "blank time remove";
+		align-items: center;
+
+		label {
+			grid-area: label;
+		}
+
+		.remove {
+			fill: var(--fg);
+			width: 24px;
+			grid-area: remove;
+		}
+
+		input[type="checkbox"] {
+			@include sr;
+		}
+
+		.date {
+			grid-area: time;
+			font-size: 0.75rem;
+			color: var(--text-secondary);
+			opacity: 0.8;
+		}
+	}
+}
+
+.compare-button {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	height: 2rem;
+	margin: $padding $padding 0 0;
+
+	button {
+		@include cleanseButton;
+		color: var(--button-bg);
+		border: 1px solid var(--button-bg);
+		background: none;
+		border-radius: 0.25rem;
+		margin: 0;
+		padding: 0.15rem 1rem;
+		display: inline-flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+		min-width: 180px;
+		&:disabled {
+			color: var(--disabled);
+			cursor: not-allowed;
+
+			svg {
+				fill: var(--disabled);
+			}
+		}
+
+		span {
+			flex: 0 0 auto;
+		}
+
+		svg {
+			flex: 0 0 1rem;
+			margin-right: 0.125rem;
+			fill: var(--button-bg);
+		}
+	}
+}
+
+.no-compare {
+	margin: 0;
+	padding-right: $padding;
+}

@@ -1,0 +1,33 @@
+@import '../variables';
+@import '../defaults.scss';
+
+html.radar {
+	body {
+		overflow: hidden;
+		background-color: var(--bg);
+		color: var(--fg);
+	}
+}
+
+.stats-radar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 10000;
+	color: var(--fg);
+	background-color: var(--bg);
+
+	.content {
+		width: calc(100vw - #{$padding * 2});
+		max-width: 75rem;
+		height: calc(100vh - #{$padding * 2});
+		margin: 0 auto;
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: center;
+		justify-content: center;
+	}
+}

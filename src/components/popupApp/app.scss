@@ -1,0 +1,10 @@
+@import '../variables';
+@import '../defaults';
+
+.popup {
+	width: 350px;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--font);
+	position: relative;
+}

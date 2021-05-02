@@ -9,15 +9,15 @@ const chart = "Chart.js";
 const common = base(dirName, react, reactDom, chart);
 
 const config = (rootDir) => ({
-    mode: "development",
-    resolve: {
-        alias: {
-            "react-dom": "@hot-loader/react-dom"
-        },
+  mode: "development",
+  resolve: {
+    alias: {
+      "react-dom": "@hot-loader/react-dom"
     },
-    devServer: {
-        contentBase: `./${rootDir}`
-    }
+  },
+  devServer: {
+    contentBase: `./${rootDir}`
+  }
 });
 
 export default merge(common, config);

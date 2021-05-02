@@ -1,6 +1,6 @@
-import PlayerPosition from "./playerPosition";
+import PlayerPosition from './playerPosition';
 
 export default interface PlayerInfo {
-    name: string;
-    position: PlayerPosition;
+  name: string;
+  position: PlayerPosition;
 }

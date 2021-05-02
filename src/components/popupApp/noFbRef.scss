@@ -1,0 +1,14 @@
+@import '../variables';
+
+.no-fb-ref {
+	padding: $padding;
+
+	p {
+		margin: 0;
+	}
+
+	a {
+		color: var(--link);
+		text-decoration-color: var(--link-underline);
+	}
+}
