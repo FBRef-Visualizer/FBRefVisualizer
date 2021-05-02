@@ -11,27 +11,27 @@ const chart = "Chart.min.js";
 const common = base(dirName, react, reactDom, chart);
 
 const config = {
-    mode: "production",
-    resolve: {
-        extensions: [".js", ".jsx", ".tsx", ".ts"]
-    },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new ZipPlugin({
-            path: "..",
-            filename: "FBRefVisualizer.zip",
-            exclude: [/\.txt$/],
-            fileOptions: {
-                mtime: new Date(),
-                mode: 0o100664,
-                compress: true,
-                forceZip64Format: false
-            },
-            zipOptions: {
-                forceZip64Format: false,
-            }
-        })
-    ],
+  mode: "production",
+  resolve: {
+    extensions: [".js", ".jsx", ".tsx", ".ts"]
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new ZipPlugin({
+      path: "..",
+      filename: "FBRefVisualizer.zip",
+      exclude: [/\.txt$/],
+      fileOptions: {
+        mtime: new Date(),
+        mode: 0o100664,
+        compress: true,
+        forceZip64Format: false
+      },
+      zipOptions: {
+        forceZip64Format: false,
+      }
+    })
+  ],
 };
 
 export default merge(common, config);

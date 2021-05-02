@@ -3,9 +3,9 @@ import { render } from 'react-dom';
 import Popup from './components/popupApp/app';
 
 (() => {
-    const element = document.getElementById('popup-app');
-    if (element) {
-        var app = <Popup />;
-        render(app, element);
-    }
+  const element = document.getElementById('popup-app');
+  if (element) {
+    const app = <Popup />;
+    render(app, element);
+  }
 })();

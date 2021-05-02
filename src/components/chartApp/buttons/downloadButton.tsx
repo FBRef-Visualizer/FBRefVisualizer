@@ -5,20 +5,20 @@ import Button from './button';
 import './downloadButton.scss';
 
 interface Props {
-    hide: () => void;
+  hide: () => void;
 }
 
 const Download: FC<Props> = (props: Props) => {
-    const { hide } = props;
-    function onClick(): void {
-        hide();
-    }
+  const { hide } = props;
+  function onClick(): void {
+    hide();
+  }
 
-    return (
-        <Button label="Download" onClick={onClick} wrapperClass="download-radar">
-            <Icon iconType={IconType.Download} />
-        </Button>
-    );
+  return (
+	<Button label="Download" onClick={onClick} wrapperClass="download-radar">
+		<Icon iconType={IconType.Download} />
+	</Button>
+  );
 };
 
 export default Download;

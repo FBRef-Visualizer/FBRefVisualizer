@@ -6,17 +6,17 @@ import Button from './button';
 import './closeButton.scss';
 
 const Close: FC = () => {
-    function onClick(): void {
-        chrome.runtime.sendMessage({
-            command: Command.Close
-        });
-    }
+  function onClick(): void {
+    chrome.runtime.sendMessage({
+      command: Command.Close
+    });
+  }
 
-    return (
-        <Button label="Close" onClick={onClick} wrapperClass="close-radar">
-            <Icon iconType={IconType.Close} />
-        </Button>
-    );
+  return (
+	<Button label="Close" onClick={onClick} wrapperClass="close-radar">
+		<Icon iconType={IconType.Close} />
+	</Button>
+  );
 };
 
 export default Close;

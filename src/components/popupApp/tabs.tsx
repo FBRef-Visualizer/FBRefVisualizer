@@ -6,25 +6,27 @@ import './tabs.scss';
 import TabToggle from './tabToggle';
 
 interface Props {
-    children: ReactElement | ReactElement[];
+  children: ReactElement | ReactElement[];
 }
 
 const Tabs: FC<Props> = (props: Props) => {
-    const { children } = props;
-    const { state: { isOnFbRef } } = useContext(AppContext);
+  const { children } = props;
+  const { state: { isOnFbRef } } = useContext(AppContext);
 
-    if (!isOnFbRef) {
-        return null;
-    }
+  if (!isOnFbRef) {
+    return null;
+  }
 
-    return <div className="tabs">
-        <div className="tab-container">
-            {children}
-        </div>
-        <div className="tab-controls">
-            {Object.values(Tab).map(tab => <TabToggle tab={tab} key={tab} />)}
-        </div>
-    </div>
-}
+  return (
+	<div className="tabs">
+		<div className="tab-container">
+			{children}
+		</div>
+		<div className="tab-controls">
+			{Object.values(Tab).map((tab) => <TabToggle tab={tab} key={tab} />)}
+		</div>
+	</div>
+  );
+};
 
 export default Tabs;

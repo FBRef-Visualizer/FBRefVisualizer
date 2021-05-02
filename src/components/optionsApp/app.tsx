@@ -7,16 +7,15 @@ import './app.scss';
 import Layout from './layout';
 
 const App: FC = () => {
+	const [options, setOptions] = React.useState<Options | null>(null);
 
-    const [options, setOptions] = React.useState<Options | null>(null);
+	useEffect(() => {
+		loadOptions((loadedOptions) => {
+			setOptions(loadedOptions);
+		});
+	}, []);
 
-    useEffect(() => {
-        loadOptions(loadedOptions => {
-            setOptions(loadedOptions);
-        });
-    }, [loadOptions]);
-
-    return <Layout defaultOptions={options} />;
+	return <Layout defaultOptions={options} />;
 };
 
 export default App;

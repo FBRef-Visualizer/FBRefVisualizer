@@ -4,28 +4,26 @@ import './check.scss';
 import Icon, { IconType } from './icon';
 
 interface Props {
-    checked: boolean;
-    onChange: () => void;
+  checked: boolean;
+  onChange: () => void;
 }
 
 const Check: FC<Props> = (props: Props) => {
-    const {
-        checked,
-        onChange
-    } = props;
+  const {
+    checked,
+    onChange
+  } = props;
 
+  const iconType = checked ? IconType.CheckBox : IconType.CheckBoxEmpty;
+  const className = checked ? 'checked' : 'unchecked';
 
-    const iconType = checked ? IconType.CheckBox : IconType.CheckBoxEmpty;
-    const className = checked ? "checked" : "unchecked";
-
-    return (
-        <Icon
-            iconType={iconType}
-            className={`checkbox ${className}`}
-            onClick={onChange}
-        />
-    );
-
+  return (
+	<Icon
+		iconType={iconType}
+		className={`checkbox ${className}`}
+		onClick={onChange}
+	/>
+  );
 };
 
 export default Check;

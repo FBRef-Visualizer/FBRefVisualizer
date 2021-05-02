@@ -10,22 +10,22 @@ import Tab from './tab';
 import Tabs from './tabs';
 
 const Layout: FC = () => {
-    const { state: { isOnFbRef } } = useContext(AppContext);
+  const { state: { isOnFbRef } } = useContext(AppContext);
 
-    return (
-        <div className={`popup ${isOnFbRef ? 'on-fb-ref' : 'not-on-fbref'}`}>
-            <NoFbRef />
-            <Tabs>
-                <Tab tab={TabEnum.Player}>
-                    <Loading />
-                    <Options />
-                </Tab>
-                <Tab tab={TabEnum.Compare}>
-                    <Compare />
-                </Tab>
-            </Tabs>
-        </div>
-    );
+  return (
+	<div className={`popup ${isOnFbRef ? 'on-fb-ref' : 'not-on-fbref'}`}>
+		<NoFbRef />
+		<Tabs>
+			<Tab tab={TabEnum.Player}>
+				<Loading />
+				<Options />
+			</Tab>
+			<Tab tab={TabEnum.Compare}>
+				<Compare />
+			</Tab>
+		</Tabs>
+	</div>
+  );
 };
 
 export default Layout;

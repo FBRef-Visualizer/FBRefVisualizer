@@ -1,53 +1,66 @@
 {
-  "name": "fbref-visualizer",
-  "version": "1.1.0",
-  "description": "Visualize data from FBRef.com",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --color --mode production  --config webpack.prod.webpack.js",
-    "start": "webpack --color --mode development --config webpack.dev.webpack.js --watch "
-  },
-  "keywords": [],
-  "devDependencies": {
-    "@babel/core": "^7.13.16",
-    "@babel/preset-env": "^7.13.15",
-    "@babel/preset-react": "^7.13.13",
-    "@hot-loader/react-dom": "^17.0.1",
-    "@types/chart.js": "^2.9.32",
-    "@types/chrome": "^0.0.135",
-    "@types/react": "^17.0.4",
-    "@types/react-dom": "^17.0.3",
-    "babel-loader": "^8.2.2",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "copy-webpack-plugin": "^8.1.1",
-    "css-loader": "^5.2.4",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.3.1",
-    "react-hot-loader": "^4.13.0",
-    "sass": "^1.32.11",
-    "sass-loader": "^11.0.1",
-    "source-map-loader": "^2.0.1",
-    "style-loader": "^2.0.0",
-    "ts-loader": "^9.1.1",
-    "typescript": "^4.2.4",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.35.1",
-    "webpack-cli": "^4.6.0",
-    "webpack-merge": "^5.7.3",
-    "zip-webpack-plugin": "^4.0.1"
-  },
-  "dependencies": {
-    "chart.js": "^3.2.0",
-    "dexie": "^3.0.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
-  "license": "Apache-2.0",
-  "licenses": [
-    {
-      "type": "Apache-2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0"
-    }
-  ]
+	"name": "fbref-visualizer",
+	"version": "1.1.0",
+	"description": "Visualize data from FBRef.com",
+	"type": "module",
+	"root": true,
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "webpack --color --mode production  --config webpack.prod.webpack.js",
+		"start": "webpack --color --mode development --config webpack.dev.webpack.js --watch ",
+		"prepare": "husky install",
+		"lint": "eslint --config .eslintrc.cjs --fix --color src/**/*"
+	},
+	"keywords": [],
+	"devDependencies": {
+		"@babel/core": "^7.13.16",
+		"@babel/preset-env": "^7.13.15",
+		"@babel/preset-react": "^7.13.13",
+		"@hot-loader/react-dom": "^17.0.1",
+		"@types/chart.js": "^2.9.32",
+		"@types/chrome": "^0.0.135",
+		"@types/react": "^17.0.4",
+		"@types/react-dom": "^17.0.3",
+		"@typescript-eslint/eslint-plugin": "^4.22.0",
+		"@typescript-eslint/parser": "^4.22.0",
+		"babel-loader": "^8.2.2",
+		"clean-webpack-plugin": "^4.0.0-alpha.0",
+		"copy-webpack-plugin": "^8.1.1",
+		"css-loader": "^5.2.4",
+		"eslint": "^7.25.0",
+		"eslint-config-airbnb": "^18.2.1",
+		"eslint-config-airbnb-typescript": "^12.3.1",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-jsx-a11y": "^6.4.1",
+		"eslint-plugin-react": "^7.23.2",
+		"eslint-plugin-react-hooks": "^4.2.0",
+		"file-loader": "^6.2.0",
+		"html-webpack-plugin": "^5.3.1",
+		"husky": "^6.0.0",
+		"react-hot-loader": "^4.13.0",
+		"sass": "^1.32.11",
+		"sass-loader": "^11.0.1",
+		"source-map-loader": "^2.0.1",
+		"style-loader": "^2.0.0",
+		"ts-loader": "^9.1.1",
+		"typescript": "^4.2.4",
+		"url-loader": "^4.1.1",
+		"webpack": "^5.35.1",
+		"webpack-cli": "^4.6.0",
+		"webpack-merge": "^5.7.3",
+		"zip-webpack-plugin": "^4.0.1"
+	},
+	"dependencies": {
+		"chart.js": "^3.2.0",
+		"dexie": "^3.0.3",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2"
+	},
+	"license": "Apache-2.0",
+	"licenses": [
+		{
+			"type": "Apache-2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0"
+		}
+	]
 }

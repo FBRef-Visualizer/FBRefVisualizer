@@ -3,9 +3,9 @@ import { render } from 'react-dom';
 import Options from './components/optionsApp/app';
 
 (() => {
-    const element = document.getElementById('options-app');
-    if (element) {
-        var app = <Options />;
-        render(app, element);
-    }
+  const element = document.getElementById('options-app');
+  if (element) {
+    const app = <Options />;
+    render(app, element);
+  }
 })();

@@ -1,13 +1,13 @@
-import * as React from "react";
-import { FC, useState } from "react";
-import { Command, Message } from "../../types/message";
-import Player from "../../types/player";
-import "./app.scss";
-import Attribution from "./attribution";
-import Buttons from "./buttons/buttons";
-import Chart from "./charts/chart";
-import Downloader from "./downloader";
-import PlayerInfoHeading from "./playerInfo";
+import * as React from 'react';
+import { FC, useState } from 'react';
+import { Command, Message } from '../../types/message';
+import Player from '../../types/player';
+import './app.scss';
+import Attribution from './attribution';
+import Buttons from './buttons/buttons';
+import Chart from './charts/chart';
+import Downloader from './downloader';
+import PlayerInfoHeading from './playerInfo';
 
 interface Props {
   players: Player[];
@@ -18,7 +18,7 @@ function getName(players: Player[]): string {
   if (players.length < 2) {
     return players[0].info.name;
   }
-  return players.map(p => p.info.name).join(' vs. ');
+  return players.map((p) => p.info.name).join(' vs. ');
 }
 
 const App: FC<Props> = (props: Props) => {
@@ -36,15 +36,15 @@ const App: FC<Props> = (props: Props) => {
   });
 
   return (
-    <div className="stats-radar">
-      <div className="content">
-        <PlayerInfoHeading name={name} position={players[0].info.position} />
-        <Chart players={players} splitIndexes={splitIndexes} />
-        <Buttons />
-        <Attribution />
-        <Downloader name={name} dataUrl={dataUrl} />
-      </div>
-    </div>
+	<div className="stats-radar">
+		<div className="content">
+			<PlayerInfoHeading name={name} position={players[0].info.position} />
+			<Chart players={players} splitIndexes={splitIndexes} />
+			<Buttons />
+			<Attribution />
+			<Downloader name={name} dataUrl={dataUrl} />
+		</div>
+	</div>
   );
 };
 

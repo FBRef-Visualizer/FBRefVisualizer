@@ -1,9 +1,9 @@
 export type TimeFormat = 12 | 24;
 
 export interface Options {
-    timeFormat: TimeFormat;
+  timeFormat: TimeFormat;
 }
 
 export const defaultOptions: Options = {
-    timeFormat: 12
+  timeFormat: 12
 };
