@@ -10,42 +10,44 @@ import Downloader from './downloader';
 import PlayerInfoHeading from './playerInfo';
 
 interface Props {
-  players: Player[];
-  splitIndexes: number[] | null;
+	players: Player[];
+	splitIndexes: number[] | null;
 }
 
 function getName(players: Player[]): string {
-  if (players.length < 2) {
-    return players[0].info.name;
-  }
-  return players.map((p) => p.info.name).join(' vs. ');
+	if (players.length < 2) {
+		return players[0].info.name;
+	}
+	return players.map((p) => p.info.name).join(' vs. ');
 }
 
 const App: FC<Props> = (props: Props) => {
-  const {
-    players,
-    splitIndexes
-  } = props;
-  const name = getName(players);
-  const [dataUrl, setDataUrl] = useState<string | null>(null);
+	const {
+		players,
+		splitIndexes
+	} = props;
+	const name = getName(players);
+	const [dataUrl, setDataUrl] = useState<string | null>(null);
 
-  chrome.runtime.onMessage.addListener((message: Message) => {
-    if (message.command === Command.DownloadDone) {
-      setDataUrl(message.dataUrl);
-    }
-  });
+	chrome.runtime.onMessage.addListener((message: Message) => {
+		if (message.command === Command.DownloadDone) {
+			setDataUrl(message.dataUrl);
+			return true;
+		}
+		return false;
+	});
 
-  return (
-	<div className="stats-radar">
-		<div className="content">
-			<PlayerInfoHeading name={name} position={players[0].info.position} />
-			<Chart players={players} splitIndexes={splitIndexes} />
-			<Buttons />
-			<Attribution />
-			<Downloader name={name} dataUrl={dataUrl} />
+	return (
+		<div className="stats-radar">
+			<div className="content">
+				<PlayerInfoHeading name={name} position={players[0].info.position} />
+				<Chart players={players} splitIndexes={splitIndexes} />
+				<Buttons />
+				<Attribution />
+				<Downloader name={name} dataUrl={dataUrl} />
+			</div>
 		</div>
-	</div>
-  );
+	);
 };
 
 export default App;

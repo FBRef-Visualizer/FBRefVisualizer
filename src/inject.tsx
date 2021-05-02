@@ -38,7 +38,7 @@ function requestLoadStatusListener(
 	_sender: chrome.runtime.MessageSender,
 	// eslint-disable-next-line no-unused-vars
 	sendResponse: (data: { status: boolean; id: string; name: string; }) => void
-): void {
+): boolean {
 	if (message.command === Command.RequestLoadStatus) {
 		if (status) {
 			const name = loadName();
@@ -47,10 +47,12 @@ function requestLoadStatusListener(
 		} else {
 			sendResponse({ status: false, id: 'n/a', name: 'n/a' });
 		}
+		return true;
 	}
+	return false;
 }
 
-function scrapeDataForCompareListener(message: Message): void {
+function scrapeDataForCompareListener(message: Message): boolean {
 	if (message.command === Command.ScrapeDataForCompare) {
 		const scrapeResult = scrape();
 		if (scrapeResult) {
@@ -67,10 +69,12 @@ function scrapeDataForCompareListener(message: Message): void {
 		} else {
 			console.error('Failed to scrape');
 		}
+		return true;
 	}
+	return false;
 }
 
-function launchListener(message: Message): void {
+function launchListener(message: Message): boolean {
 	if (message.command === Command.Launch) {
 		closeReactDiv();
 		const players: Player[] = message.players ? message.players : [];
@@ -98,13 +102,18 @@ function launchListener(message: Message): void {
 				splitIndexes={splitIndexes}
 			/>, reactDiv);
 		}
+
+		return true;
 	}
+	return false;
 }
 
-function closeListener(message: Message): void {
+function closeListener(message: Message): boolean {
 	if (message.command === Command.Close) {
 		closeReactDiv();
+		return true;
 	}
+	return false;
 }
 
 function init(): void {

@@ -40,7 +40,9 @@ const Popup: FC = () => {
 					hasData: message.status,
 					currentPlayer: message.name
 				});
+				return true;
 			}
+			return false;
 		});
 	}, []);
 
