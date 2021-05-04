@@ -1,40 +1,37 @@
 {
-  "action": {
-    "default_icon": {
-      "16": "icon16-disabled.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
-    },
-    "default_popup": "popup.html",
-    "default_title": "FBRef Visualizer"
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
-  "description": "Visualize FBRef.com data.",
-  "externally_connectable": {
-    "matches": [
-      "https://fbref.com/*"
-    ]
-  },
-  "host_permissions": [
-    "https://fbref.com/*"
-  ],
-  "icons": {
-    "16": "icon16-disabled.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  },
-  "manifest_version": 3,
-  "name": "FBRef Visualizer",
-  "options_ui": {
-    "open_in_tab": false,
-    "page": "options.html"
-  },
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "storage"
-  ],
-  "version": "1.1.0"
+	"action": {
+		"default_icon": {
+			"16": "icon16-disabled.png",
+			"48": "icon48.png",
+			"128": "icon128.png"
+		},
+		"default_popup": "popup.html",
+		"default_title": "FBRef Visualizer"
+	},
+	"background": {
+		"service_worker": "background.js"
+	},
+	"description": "Visualize FBRef.com data.",
+	"externally_connectable": {
+		"matches": [
+			"https://fbref.com/*"
+		]
+	},
+	"icons": {
+		"16": "icon16-disabled.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+	},
+	"manifest_version": 3,
+	"name": "FBRef Visualizer",
+	"options_ui": {
+		"open_in_tab": false,
+		"page": "options.html"
+	},
+	"permissions": [
+		"activeTab",
+		"scripting",
+		"storage"
+	],
+	"version": "1.1.0"
 }
